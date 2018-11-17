@@ -1,30 +1,27 @@
 require_relative "board.rb"
 require_relative "human_player.rb"
 require_relative "computer_player.rb"
-require "byebug"
 
 class Game
-  def initialize(n = 4)
+  def initialize(player, n = 4)
     @board = Board.new(n)
     @prev_guess = nil
-    @human = HumanPlayer.new
-    @computer = ComputerPlayer.new
+    @player = player
   end
 
   def play
+    system("clear")
     @board.populate
 
     until @board.won?
-      puts "-------------------"
       @board.render
-      # guessed_pos = @human.guess
-      guessed_pos = @computer.guess
+      guessed_pos = @player.guess
 
       next if !guessed_pos
       make_guess(guessed_pos)
     end
 
-    puts "-------------------"
+    system("clear")
     @board.render
     puts "You win!!"
   end
@@ -33,19 +30,23 @@ class Game
     guessed_card = @board.reveal(guessed_pos)
     return nil if guessed_card.nil?
 
-    @computer.receive_revealed_card(guessed_pos, guessed_card)
+    @player.receive_revealed_card(guessed_pos, guessed_card)
 
     if !@prev_guess
       @prev_guess = [guessed_card, guessed_pos]
     else
       if guessed_card != @prev_guess[0]
+        system("clear")
         @board.render
-        sleep(1)
+        puts "No match"
+        sleep(1.7)
         guessed_card.hide
         @prev_guess[0].hide
         system("clear")
       else
-        @computer.receive_match(@prev_guess[1], guessed_pos)
+        puts "Match!"
+        sleep(1.7)
+        @player.receive_match(@prev_guess[1], guessed_pos)
       end
       @prev_guess = nil
     end
@@ -53,6 +54,8 @@ class Game
 end
 
 if __FILE__ == $PROGRAM_NAME
-  g = Game.new
-  g.play
+  # human = HumanPlayer.new
+  computer = ComputerPlayer.new
+  game = Game.new(computer)
+  game.play
 end
