@@ -7,6 +7,7 @@ class Tile
   end
 
   def to_s
-    @given ? @value.colorize(:blue) : @value.colorize(:red)
+    return " " if @value == 0
+    @given ? @value.to_s.colorize(:blue) : @value.to_s.colorize(:red)
   end
 end
