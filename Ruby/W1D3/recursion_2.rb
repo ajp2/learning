@@ -65,23 +65,58 @@ def fibonacci_recursive(n)
   fib_arr << fib_arr[-1] + fib_arr[-2]
 end
 
-def bsearch(arr, target)
-  middle = arr.length / 2
-  location = target <=> arr[middle]
-  p [middle, location]
+def bsearch(arr, target, low = 0, high = nil)
+  high = arr.length - 1 if high == nil
+  mid = low + (high - low) / 2
+  return nil if low > high
+  location = target <=> arr[mid]
 
-  return middle if location == 0
-  if location == -1
-    bsearch(arr[0...middle], target)
-  elsif location == 1
-    bsearch(arr[middle+1..-1], target)
+  if location == 0
+    return mid
+  elsif location == -1
+    return bsearch(arr, target, low, mid - 1)
+  else
+    return bsearch(arr, target, mid+1, high)
   end
 end
 
-puts bsearch([1, 2, 3], 1) # => 0
-puts bsearch([2, 3, 4, 5], 3) # => 1
-puts bsearch([2, 4, 6, 8, 10], 6) # => 2
-puts bsearch([1, 3, 4, 5, 9], 5) # => 3
-puts bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
-puts bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
-puts bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
+def merge_sort(arr)
+  return arr if arr.length <= 1
+
+  middle = arr.length / 2
+  sorted_left = merge_sort(arr[0...middle])
+  sorted_right = merge_sort(arr[middle..-1])
+  merge(sorted_left, sorted_right)
+end
+
+def merge(left, right)
+  merged_arr = []
+  loop do
+    break if left[0].nil? && right[0].nil?
+    if left[0].nil?
+      merged_arr << right.shift
+      next
+    elsif right[0].nil?
+      merged_arr << left.shift
+      next
+    end
+
+    if left[0] <= right[0]
+      merged_arr << left.shift
+    else
+      merged_arr << right.shift
+    end
+  end
+  merged_arr
+end
+
+def subsets(arr)
+  # return all subsets of arr
+  return arr if arr.length <= 0
+
+  new_arr = arr.dup
+  first_val = new_arr.shift
+  initial_subsets = [subsets(new_arr)]
+  
+  initial_subsets.dup.each { |subset| initial_subsets << (subset + [first_val]) }
+end
