@@ -1,6 +1,8 @@
 require_relative "Tile.rb"
 
 class Board
+  attr_accessor :grid
+
   def initialize(grid)
     @grid = grid
     @NUMS_TO_COMPLETE = (1..@grid.length).to_a
@@ -24,11 +26,6 @@ class Board
       grid_arr << row
     end
     grid_arr
-  end
-
-  def [](pos)
-    row, col = pos
-    @grid[row][col]
   end
 
   def []=(pos, val)
@@ -100,5 +97,4 @@ class Board
     tile_arr.map { |tile| tile.value }
   end
 
-  attr_accessor :grid
 end

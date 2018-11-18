@@ -38,5 +38,7 @@ class Game
   
 end
 
-g = Game.new("sudoku1.txt")
-g.play
+if __FILE__ == $PROGRAM_NAME
+  game = Game.new("sudoku1.txt")
+  game.play
+end
