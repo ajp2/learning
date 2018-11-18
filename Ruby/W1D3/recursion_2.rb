@@ -64,3 +64,24 @@ def fibonacci_recursive(n)
   fib_arr = fibonacci_recursive(n-1)
   fib_arr << fib_arr[-1] + fib_arr[-2]
 end
+
+def bsearch(arr, target)
+  middle = arr.length / 2
+  location = target <=> arr[middle]
+  p [middle, location]
+
+  return middle if location == 0
+  if location == -1
+    bsearch(arr[0...middle], target)
+  elsif location == 1
+    bsearch(arr[middle+1..-1], target)
+  end
+end
+
+puts bsearch([1, 2, 3], 1) # => 0
+puts bsearch([2, 3, 4, 5], 3) # => 1
+puts bsearch([2, 4, 6, 8, 10], 6) # => 2
+puts bsearch([1, 3, 4, 5, 9], 5) # => 3
+puts bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
+puts bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
+puts bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
