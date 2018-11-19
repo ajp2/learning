@@ -1,4 +1,4 @@
-      def range_iterative(start, ending)
+def range_iterative(start, ending)
   nums_arr = []
   (start...ending).each do |n|
     nums_arr << n
@@ -123,11 +123,40 @@ def subsets(arr)
   return initial_subsets + new_subsets
 end
 
-def permutations(arr, list_of_permutations = [])
-  return list_of_permutations if (1..arr.length).reduce(1, :*) == list_of_permutations.length
+def permutations(arr)
+  return [arr] if arr.length <= 1
 
-  list_of_permutations << arr if !list_of_permutations.include?(arr)
-  return permutations(arr.shuffle)
+  first = arr.shift
+  perms = permutations(arr)
+
+  total_permutations = []
+  perms.each do |perm|
+    (0..perm.length).each do |i|
+      total_permutations << perm[0...i] + [first] + perm[i..-1]
+    end
+  end
+  total_permutations
 end
 
-p permutations([1,2,3])
+def make_change(target, coins = [25, 10, 5, 1])
+  return [] if target == 0
+  return nil if coins.none? { |coin| coin <= target }
+
+  coins = coins.sort.reverse
+
+  best_change = nil
+  coins.each_with_index do |coin, index|
+    next if coin > target
+    remainder = target - coin
+
+    best_remainder = make_change(remainder, coins.drop(index))
+    next if best_change.nil?
+    this_change = [coin] + best_remainder
+
+    if best_change.nil? || (this_change.count < best_change.count)
+      best_change = this_change
+    end
+  end
+
+  best_change
+end
