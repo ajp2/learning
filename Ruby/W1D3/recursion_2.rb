@@ -1,4 +1,4 @@
-def range_iterative(start, ending)
+      def range_iterative(start, ending)
   nums_arr = []
   (start...ending).each do |n|
     nums_arr << n
@@ -111,12 +111,23 @@ def merge(left, right)
 end
 
 def subsets(arr)
-  # return all subsets of arr
-  return arr if arr.length <= 0
+  return [arr] if arr.length == 0
 
   new_arr = arr.dup
-  first_val = new_arr.shift
-  initial_subsets = [subsets(new_arr)]
+  last_val = new_arr.pop
+  initial_subsets = subsets(new_arr)
+
+  new_subsets = []
+  initial_subsets.each { |subset| new_subsets << subset + [last_val]}
   
-  initial_subsets.dup.each { |subset| initial_subsets << (subset + [first_val]) }
+  return initial_subsets + new_subsets
 end
+
+def permutations(arr, list_of_permutations = [])
+  return list_of_permutations if (1..arr.length).reduce(1, :*) == list_of_permutations.length
+
+  list_of_permutations << arr if !list_of_permutations.include?(arr)
+  return permutations(arr.shuffle)
+end
+
+p permutations([1,2,3])
