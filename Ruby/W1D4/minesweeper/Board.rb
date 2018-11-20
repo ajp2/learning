@@ -1,18 +1,15 @@
 require_relative "Tile.rb"
 
 class Board
+  attr_reader :game_over
+
   def initialize
     @board = Array.new(9) { Array.new(9, "*") }
     @board = populate
-    @lost = false
   end
 
   def populate
-    bombed_tiles = []
-    10.times do
-      pos = [rand(@board.length), rand(@board.length)]
-      bombed_tiles << pos if !bombed_tiles.include?(pos)
-    end
+    bombed_tiles = generate_bombed_tiles
 
     @board.map.with_index do |row, idx1|
       row.map.with_index do |ele, idx2|
@@ -25,6 +22,15 @@ class Board
     end
   end
 
+  def generate_bombed_tiles
+    bombed_tiles = []
+    10.times do
+      pos = [rand(@board.length), rand(@board.length)]
+      bombed_tiles << pos if !bombed_tiles.include?(pos)
+    end
+    bombed_tiles
+  end
+
   def neighbours(pos)
     neighbours_list = []
     row_before, row_after = pos[0] - 1, pos[0] + 1
@@ -35,7 +41,8 @@ class Board
         next if [row_idx, col_idx] == pos
         next if row_idx < 0 || col_idx < 0
 
-        if @board[row_idx][col_idx]
+        if @board[row_idx] && @board[row_idx][col_idx]
+          next if @board[row_idx][col_idx].revealed
           neighbours_list << @board[row_idx][col_idx] 
         end
         
@@ -52,24 +59,36 @@ class Board
 
   def reveal_tile(pos, action)
     x, y = pos[0], pos[1]
-    if action == "f"
-      @board[x][y].flag
-    else
-      @board[x][y].reveal
-      @lost = true if @board[x][y].bombed
+    tile = @board[x][y]
 
-      # neighbours_list = neighbours(pos)
-      # neighbours_list.each do |neighbour_tile|
-      #   bomb_count = neighbour_bomb_count(pos)
-      #   if bomb_count >= 1
-      #     # stuff
-      #   end
-      # end
+    if action == "f" || tile.flagged
+      tile.flag
+    elsif tile.bombed
+      tile.reveal
+      render
+    else
+      tile.reveal
+      bomb_count = reveal_neighbour(pos)
+      tile.value = bomb_count if bomb_count
     end
   end
 
+  def reveal_neighbour(pos)
+    bomb_count = neighbour_bomb_count(pos)
+    if bomb_count >= 1
+      return bomb_count
+    else
+      neighbours_list = neighbours(pos)
+      neighbours_list.each do |neighbour|
+        recursive_bomb_count = reveal_tile(neighbour.pos, "r")
+      end
+    end
+
+    nil
+  end
+
   def render
-    # system("clear")
+    system("clear")
 
     print "  "
     @board.length.times { |n| print n.to_s + " " }
@@ -78,8 +97,11 @@ class Board
     @board.each_with_index do |row, idx|
       print idx.to_s + " "
       row.each do |tile|
+        reveal_char = tile.value ? tile.value.to_i : "-"
+        reveal_char = "B" if tile.bombed
+
         if tile.revealed
-          print "_ "
+          print "#{reveal_char} "
         elsif tile.flagged
           print "F "
         else
@@ -91,30 +113,14 @@ class Board
   end
 
   def lose?
-    @lost
+    @board.flatten.any? { |tile| tile.revealed && tile.bombed }
   end
 
   def win?
-    @board.all? { |row| row.all? { |tile| tile.revealed || tile.bombed }}
+    @board.flatten.all? { |tile| tile.revealed || tile.bombed }
   end
 
-  def cheat
-    # system("clear")
-
-    print "  "
-    @board.length.times { |n| print n.to_s + " " }
-    puts
-
-    @board.each_with_index do |row, idx|
-      print idx.to_s + " "
-      row.each do |tile|
-        if tile.bombed
-          print "B "
-        else
-          print "* "
-        end
-      end
-      puts
-    end
+  def game_over?
+    win? || lose?
   end
 end
