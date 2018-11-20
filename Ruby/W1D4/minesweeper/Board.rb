@@ -3,6 +3,26 @@ require_relative "Tile.rb"
 class Board
   def initialize
     @board = Array.new(9) { Array.new(9, "*") }
+    @board = populate
+    @lost = false
+  end
+
+  def populate
+    bombed_tiles = []
+    10.times do
+      pos = [rand(@board.length), rand(@board.length)]
+      bombed_tiles << pos if !bombed_tiles.include?(pos)
+    end
+
+    @board.map.with_index do |row, idx1|
+      row.map.with_index do |ele, idx2|
+        if bombed_tiles.include?([idx1, idx2])
+          Tile.new([idx1, idx2], true)
+        else
+          Tile.new([idx1, idx2])
+        end
+      end
+    end
   end
 
   def neighbours(pos)
@@ -25,13 +45,31 @@ class Board
     neighbours_list
   end
 
-  def neighbour_bomb_count
-    neighbours_list = neighbours
+  def neighbour_bomb_count(pos)
+    neighbours_list = neighbours(pos)
     neighbours_list.count { |tile| tile.bombed }
   end
 
+  def reveal_tile(pos, action)
+    x, y = pos[0], pos[1]
+    if action == "f"
+      @board[x][y].flag
+    else
+      @board[x][y].reveal
+      @lost = true if @board[x][y].bombed
+
+      # neighbours_list = neighbours(pos)
+      # neighbours_list.each do |neighbour_tile|
+      #   bomb_count = neighbour_bomb_count(pos)
+      #   if bomb_count >= 1
+      #     # stuff
+      #   end
+      # end
+    end
+  end
+
   def render
-    system("clear")
+    # system("clear")
 
     print "  "
     @board.length.times { |n| print n.to_s + " " }
@@ -39,11 +77,44 @@ class Board
 
     @board.each_with_index do |row, idx|
       print idx.to_s + " "
-      row.each { |tile| print tile + " " }
+      row.each do |tile|
+        if tile.revealed
+          print "_ "
+        elsif tile.flagged
+          print "F "
+        else
+          print "* "
+        end
+      end
+      puts
+    end
+  end
+
+  def lose?
+    @lost
+  end
+
+  def win?
+    @board.all? { |row| row.all? { |tile| tile.revealed || tile.bombed }}
+  end
+
+  def cheat
+    # system("clear")
+
+    print "  "
+    @board.length.times { |n| print n.to_s + " " }
+    puts
+
+    @board.each_with_index do |row, idx|
+      print idx.to_s + " "
+      row.each do |tile|
+        if tile.bombed
+          print "B "
+        else
+          print "* "
+        end
+      end
       puts
     end
   end
 end
-
-b = Board.new
-b.render
