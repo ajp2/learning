@@ -13,9 +13,9 @@ class KnightPathFinder
     col_start, col_end = pos[1] - 2, pos[1] + 2
 
     (row_start..row_end).each do |row_idx|
-      next if row_idx < 0 || row_idx > 8
+      next if row_idx < 0 || row_idx > 7
       (col_start..col_end).each do |col_idx|
-        next if col_idx < 0 || col_idx > 8
+        next if col_idx < 0 || col_idx > 7
 
         moves << [row_idx, col_idx] if valid_knight_move(pos, [row_idx, col_idx])
       end
@@ -34,11 +34,28 @@ class KnightPathFinder
     moves = KnightPathFinder.valid_moves(pos)
     moves = moves.select { |move| !@visited_positions.include?(move) }
 
-    @visited_positions << moves
+    @visited_positions += moves
     moves
   end
 
   def build_move_tree
+    nodes = [@root_node]
 
+    until nodes.empty?
+      node = nodes.shift
+      new_moves = new_move_positions(node.value)
+
+      new_moves.each do |move|
+        new_node = PolyTreeNode.new(move)
+        new_node.parent = node
+        node.add_child(new_node)
+        nodes << new_node
+      end
+    end
+
+    p @root_node
   end
 end
+
+k = KnightPathFinder.new([2,2])
+k.build_move_tree

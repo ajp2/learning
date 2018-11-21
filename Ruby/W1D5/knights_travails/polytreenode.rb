@@ -16,9 +16,7 @@ class PolyTreeNode
   end
 
   def children
-    # use to dup to avoid someone modifying children directly 
-    # throgh the children arrray
-    @children.dup
+    @children
   end
 
   def value
