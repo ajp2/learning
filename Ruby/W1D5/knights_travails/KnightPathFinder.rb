@@ -33,7 +33,7 @@ class KnightPathFinder
 
   def new_move_positions(pos)
     moves = KnightPathFinder.valid_moves(pos)
-    moves = moves.select { |move| !@visited_positions.include?(move) }
+    moves = moves.reject { |move| @visited_positions.include?(move) }
 
     @visited_positions += moves
     moves
@@ -60,7 +60,7 @@ class KnightPathFinder
     result_node = @root_node.bfs(end_pos)
     return nil if result_node.nil?
 
-    p trace_path_back(result_node)
+    trace_path_back(result_node)
   end
 
   def trace_path_back(result_node)
@@ -76,6 +76,8 @@ class KnightPathFinder
 
 end
 
-kpf = KnightPathFinder.new([0, 0])
-kpf.find_path([7, 6])
-kpf.find_path([6, 2])
+if $PROGRAM_NAME == __FILE__
+  kpf = KnightPathFinder.new([0, 0])
+  p kpf.find_path([7, 6])
+  p kpf.find_path([6, 2])
+end
