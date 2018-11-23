@@ -26,7 +26,7 @@ class Board
 
   def make_move(start_pos, current_player_name)
     stones = @cups[start_pos].dup
-    self.cups[start_pos] = []
+    @cups[start_pos] = []
 
     next_cup = start_pos + 1
     until stones.empty?
@@ -36,21 +36,20 @@ class Board
         (current_player_name == @player2 && next_cup == 6)
         next_cup += 1
       else
-        self.cups[next_cup].push(stones.pop)
+        @cups[next_cup].push(stones.pop)
         next_cup += 1
       end
     end
 
     render
-    next_turn(next_cup - 1, current_player_name)
+    next_turn(next_cup - 1)
   end
 
-  def next_turn(ending_cup_idx, current_player_name)
+  def next_turn(ending_cup_idx)
     # helper method to determine whether #make_move returns :switch, :prompt, or ending_cup_idx
-    if (current_player_name == @player1 && ending_cup_idx == 6) ||
-      (current_player_name == @player2 && ending_cup_idx == 13)
+    if ending_cup_idx == 6 || ending_cup_idx == 13
       return :prompt
-    elsif self.cups[ending_cup_idx].length == 1
+    elsif @cups[ending_cup_idx].length == 1
       return :switch
     else
       return ending_cup_idx
@@ -66,18 +65,12 @@ class Board
   end
 
   def one_side_empty?
-    self.cups[0..5].all? { |cup| cup.empty? } || self.cups[7..12].all? { |cup| cup.empty? }
+    @cups[0..5].all? { |cup| cup.empty? } || @cups[7..12].all? { |cup| cup.empty? }
   end
 
   def winner
-    if @cups[6].length == 6 && @cups[13].length == 6
-      return :draw
-    end
+    return :draw if @cups[6].length == @cups[13].length
 
-    if @cups[6].length > @cups[13].length
-      return @player1
-    else
-      return @player2
-    end
+    @cups[6].length > @cups[13].length ? @player1 : @player2
   end
 end
