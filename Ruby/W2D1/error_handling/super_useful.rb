@@ -33,6 +33,8 @@ end
 # PHASE 4
 class BestFriend
   def initialize(name, yrs_known, fav_pastime)
+    raise RangeError.new("Must know each other for at least 5 years") if yrs_known < 5
+    raise ArgumentError.new("Plase enter a name and pastime") if name.length <= 0 || fav_pastime.length <= 0
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
