@@ -1,40 +1,57 @@
 # PHASE 2
 def convert_to_int(str)
   Integer(str)
-rescue ArgumentError => e
-  nil
+rescue ArgumentError
+  puts "Cannot covert to integer."
+ensure
+  num ||= 0
 end
 
 # PHASE 3
 FRUITS = ["apple", "banana", "orange"]
 
+class CoffeeError < StandardError
+  def message
+    "I can't have any more caffeine. My poor hear couldn't take it. You can try again."
+  end
+end
+
+class NotAFruitError < StandardError
+  def message
+    "That doesn't look like a fruit."
+  end
+end
+
 def reaction(maybe_fruit)
   if FRUITS.include? maybe_fruit
     puts "OMG, thanks so much for the #{maybe_fruit}!"
   elsif maybe_fruit == "coffee"
-    raise "Coffee"
+    raise CoffeeError
   else 
-    raise StandardError 
+    raise NotAFruitError 
   end 
 end
 
 def feed_me_a_fruit
   puts "Hello, I am a friendly monster. :)"
 
-  puts "Feed me a fruit! (Enter the name of a fruit:)"
-  maybe_fruit = gets.chomp
-  reaction(maybe_fruit)
-
-rescue => e
-  retry if e.message == "Coffee"
-  nil
+  begin
+    puts "Feed me a fruit! (Enter the name of a fruit:)"
+    maybe_fruit = gets.chomp
+    reaction(maybe_fruit)
+  rescue CoffeeError => e
+    puts e.message
+    retry
+  rescue NotAFruitError => e
+    puts e.message
 end  
 
 # PHASE 4
 class BestFriend
   def initialize(name, yrs_known, fav_pastime)
-    raise RangeError.new("Must know each other for at least 5 years") if yrs_known < 5
-    raise ArgumentError.new("Plase enter a name and pastime") if name.length <= 0 || fav_pastime.length <= 0
+    raise ArgumentError.new("yrs_known must be at least 5") if yrs_known < 5
+    raise ArgumentError.new("name canot be blank") if name.length <= 0
+    raise ArgumentError.new("fav_pastime cannot be blank") if fav_pastime.length <= 0
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
