@@ -9,6 +9,7 @@ class Board
     place_pieces
   end
 
+  # call by using self[x, y] ??
   # def [](pos)
   #   puts "zxgaxfgzfgdflgjk"
   #   x, y = pos
@@ -34,9 +35,12 @@ class Board
     x1, y1 = start_pos
     x2, y2 = end_pos
     raise ArgumentError.new("No piece at start_pos") if @board[x1][y1].nil?
-    raise ArgumentError.new("end_pos is invalid") unless end_pos[0].between?(0, 8) &&
-      end_pos[1].between?(0, 8)
+    raise ArgumentError.new("end_pos is invalid") unless valid_pos?(end_pos)
     
     @board[x2][y2], @board[x1][y1] = @board[x1][y1], nil
+  end
+
+  def valid_pos?(pos)
+    pos[0].between?(0, 7) && pos[1].between?(0, 7)
   end
 end
