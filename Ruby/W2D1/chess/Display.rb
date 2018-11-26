@@ -18,7 +18,7 @@ class Display
       print "#{x.to_s} ".colorize(:red)
 
       row.each_with_index do |col, y|
-        print_value = col.nil? ? "0 " : "1 "
+        print_value = col.symbol.nil? ? "0 " : col.to_s + " "
 
         if [x, y] == cursor_pos
           if @selected
