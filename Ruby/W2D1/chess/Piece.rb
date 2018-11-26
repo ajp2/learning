@@ -3,11 +3,13 @@ require_relative "Pieces/sliding_piece.rb"
 require_relative "Pieces/stepping_piece.rb"
 
 class Piece
-  attr_reader :color, :board, :pos
+  attr_reader :color
+  attr_accessor :board, :pos
 
   def initialize(color, board, pos)
     @color = color
-    @board = board
+    @board_class = board
+    @board = @board_class.board
     @pos = pos
   end
 
@@ -26,6 +28,23 @@ class Piece
 
   def opposite_color(color)
     color == :white ? :black : :white
+  end
+
+  def move_into_check?(end_pos)
+    board_copy = @board_class.dup
+    @board_class.move_piece!(@pos, end_pos)
+    in_check = @board_class.in_check?(self.color)
+    @board_class.board = board_copy
+
+    in_check
+  end
+
+  def valid_moves
+    moves = []
+    self.moves.each do |move|
+      moves << move unless move_into_check?(move)
+    end
+    moves
   end
 end
 

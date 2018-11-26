@@ -51,13 +51,13 @@ module SlidingPiece
       end
 
       # Reached a piece
-      if self.board[next_pos[0]][next_pos[1]].symbol # change this after nil positions become objects
+      if self.board[next_pos[0]][next_pos[1]].symbol
         # Same color, move back
         next_pos = previous_pos if self.color == self.board[next_pos[0]][next_pos[1]].color
         hit_piece = true
       end
 
-      all_moves_in_dir << next_pos
+      all_moves_in_dir << next_pos unless all_moves_in_dir.include?(next_pos)
     end
 
     all_moves_in_dir
