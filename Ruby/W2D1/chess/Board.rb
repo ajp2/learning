@@ -5,7 +5,7 @@ class Board
   attr_reader :board
 
   def initialize
-    @board = Array.new(8) { Array.new(8, nil) }
+    @board = Array.new(8) { Array.new(8, NullPiece.new) }
     place_pieces
   end
 
@@ -20,13 +20,15 @@ class Board
   end
 
   def place_pieces
-    @board.each_with_index do |row, x|
-      row.each_with_index do |tile, y|
-        if x.between?(0, 1) || x.between?(6, 7)
-          self[[x, y]] = Piece.new
-        end
-      end
-    end
+    @board[1][4] = Pawn.new(:black, @board, [1, 4])
+    @board[2][3] = Pawn.new(:white, @board, [2, 3])
+    # @board.each_with_index do |row, x|
+    #   row.each_with_index do |tile, y|
+    #     if x.between?(0, 1) || x.between?(6, 7)
+    #       self[[x, y]] = Piece.new
+    #     end
+    #   end
+    # end
   end
 
   def move_piece(start_pos, end_pos)
@@ -42,3 +44,7 @@ class Board
     pos[0].between?(0, 7) && pos[1].between?(0, 7)
   end
 end
+
+g = Board.new
+p g.board[1][4].moves
+p g.board[2][3].moves
