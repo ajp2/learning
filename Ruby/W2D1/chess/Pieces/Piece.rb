@@ -33,11 +33,6 @@ class Piece
   def move_into_check?(end_pos)
     board_copy = @board_class.dup
     @board_class.move_piece!(@pos, end_pos)
-    # king cannot take queen. says in check?? when trying to take piece
-    if @board_class.in_check?(self.color)
-      p self.symbol
-      debugger
-    end
     in_check = @board_class.in_check?(self.color)
     @board_class.board = board_copy
 

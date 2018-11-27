@@ -26,7 +26,6 @@ class Game
         raise ArgumentError.new("Invalid move! Try again") if !@board[start_pos].moves.include?(end_pos)
         @board.move_piece(start_pos, end_pos)
 
-        # that move leaves you in check for valid move. Move that leaves in check passes ?? Able to take king????
       rescue ArgumentError => e
         puts e.message
         sleep(1)
@@ -76,7 +75,7 @@ end
 
 
 
-
-game = Game.new
-
-game.play
+if $PROGRAM_NAME == __FILE__
+  game = Game.new
+  game.play
+end
