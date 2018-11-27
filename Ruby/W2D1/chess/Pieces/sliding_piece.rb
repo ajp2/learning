@@ -26,12 +26,10 @@ module SlidingPiece
 
     dirs.each do |dir|
       new_moves = move_in_dir(dir)
-      unless possible_moves.include?(new_moves) || new_moves == self.pos
-        possible_moves += new_moves 
-      end
+      possible_moves += new_moves 
     end
 
-    possible_moves
+    possible_moves.uniq
   end
 
   private
@@ -57,7 +55,7 @@ module SlidingPiece
         hit_piece = true
       end
 
-      all_moves_in_dir << next_pos unless all_moves_in_dir.include?(next_pos)
+      all_moves_in_dir << next_pos unless next_pos == self.pos
     end
 
     all_moves_in_dir

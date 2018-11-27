@@ -3,7 +3,7 @@ require_relative "sliding_piece.rb"
 require_relative "stepping_piece.rb"
 
 class Piece
-  attr_reader :color
+  attr_reader :color, :board_class
   attr_accessor :board, :pos
 
   def initialize(color, board, pos)
@@ -14,7 +14,7 @@ class Piece
   end
 
   def to_s
-    self.symbol.to_s
+    self.symbol
   end
 
   def empty?
@@ -33,6 +33,11 @@ class Piece
   def move_into_check?(end_pos)
     board_copy = @board_class.dup
     @board_class.move_piece!(@pos, end_pos)
+    # king cannot take queen. says in check?? when trying to take piece
+    if @board_class.in_check?(self.color)
+      p self.symbol
+      debugger
+    end
     in_check = @board_class.in_check?(self.color)
     @board_class.board = board_copy
 
@@ -53,7 +58,7 @@ class Rook < Piece
   include SlidingPiece
 
   def symbol
-    :R
+    self.color == :white ? "\u265C" : "\u2656"
   end
 
   def move_dirs
@@ -66,7 +71,7 @@ class Bishop < Piece
   include SlidingPiece
 
   def symbol
-    :B
+    self.color == :white ? "\u265D" : "\u2657"
   end
 
   def move_dirs
@@ -79,7 +84,7 @@ class Queen < Piece
   include SlidingPiece
 
   def symbol
-    :Q
+    self.color == :white ? "\u265B" : "\u2655"
   end
 
   def move_dirs
@@ -92,7 +97,7 @@ class Knight < Piece
   include SteppingPiece
 
   def symbol
-    :k
+    self.color == :white ? "\u265E" : "\u2658"
   end
 
   def move_diffs
@@ -113,7 +118,7 @@ class King < Piece
   include SteppingPiece
 
   def symbol
-    :K
+    self.color == :white ? "\u265A" : "\u2654"
   end
 
   def move_diffs
@@ -132,7 +137,7 @@ end
 
 class Pawn < Piece
   def symbol
-    :P
+    self.color == :white ? "\u265F" : "\u2659"
   end
 
   def moves

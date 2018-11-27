@@ -127,7 +127,8 @@ class Board
     king_pos = nil
     @board.each_index do |x|
       @board[x].each_with_index do |piece, y|
-        king_pos = [x, y] if piece.symbol == :K && piece.color == color
+        king_pos = [x, y] if (piece.symbol == "\u265A" || piece.symbol == "\u2654") && 
+          piece.color == color
       end
     end
 
@@ -135,15 +136,3 @@ class Board
   end
 
 end
-
-# g = Board.new
-
-
-# g.move_piece([6, 5], [5, 5])
-# g.move_piece([1, 4], [3, 4])
-# g.move_piece([6, 6], [4, 6])
-# g.move_piece([0, 3], [4, 7])
-# p g.in_check?(:white)
-
-# p g.board[1][4].move_into_check?([2, 4])
-# p g.board[2][3].moves

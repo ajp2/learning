@@ -1,5 +1,6 @@
 require_relative "Board.rb"
 require_relative "Display.rb"
+require_relative "player.rb"
 
 class Game
   def initialize
@@ -17,19 +18,10 @@ class Game
       begin
         @display.render(@display.cursor.cursor_pos)
         puts "#{@current_player.color.to_s}'s turn"
+        puts "White in check!" if @board.in_check?(:white)
+        puts "Black in check!" if @board.in_check?(:black)
 
-        start_pos = nil
-        end_pos = nil
-
-        until start_pos && end_pos
-          move = @current_player.make_move
-          end_pos = move if start_pos && move
-          start_pos = check_start_pos(move) if move && !end_pos
-
-          system("clear")
-          @display.render(@display.cursor.cursor_pos)
-          puts "#{@current_player.color.to_s}'s turn"
-        end
+        start_pos, end_pos = player_move
 
         raise ArgumentError.new("Invalid move! Try again") if !@board[start_pos].moves.include?(end_pos)
         @board.move_piece(start_pos, end_pos)
@@ -49,8 +41,21 @@ class Game
     puts "Checkmate! #{winner} wins"
   end
 
-  def notify_players
+  def player_move
+    start_pos = nil
+    end_pos = nil
 
+    until start_pos && end_pos
+      move = @current_player.make_move
+      end_pos = move if start_pos && move
+      start_pos = check_start_pos(move) if move && !end_pos
+
+      system("clear")
+      @display.render(@display.cursor.cursor_pos)
+      puts "#{@current_player.color.to_s}'s turn"
+    end
+
+    [start_pos, end_pos]
   end
 
   private
@@ -69,20 +74,7 @@ class Game
   end
 end
 
-class Player
-  attr_reader :color
 
-  def initialize(color, display)
-    @color = color
-    @display = display
-  end
-end
-
-class HumanPlayer < Player
-  def make_move
-    input = @display.cursor.get_input
-  end
-end
 
 
 game = Game.new

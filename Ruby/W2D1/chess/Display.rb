@@ -44,10 +44,10 @@ end
 
 # d = Display.new
 
-# d.board.move_piece([6, 5], [5, 5])
-# d.board.move_piece([1, 4], [3, 4])
-# d.board.move_piece!([6, 6], [4, 6])
-# d.board.move_piece([0, 3], [4, 7])
+# board.move_piece([6, 5], [5, 5])
+# board.move_piece([1, 4], [3, 4])
+# board.move_piece!([6, 6], [4, 6])
+# board.move_piece([0, 3], [4, 7])
 # # p d.board.in_check?(:white)
 # p d.board.checkmate?(:white)
 
