@@ -32,16 +32,20 @@ MOVES = {
 
 class Cursor
 
-  attr_reader :cursor_pos, :board
+  attr_reader :cursor_pos, :board, :selected
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
     @board = board
+    @selected = false
   end
 
   def get_input
     key = KEYMAP[read_char]
-    handle_key(key)
+    key_press = handle_key(key)
+
+    toggle_selected if key_press
+    key_press
   rescue
     puts "Invalid position, try again"
     retry
@@ -98,5 +102,9 @@ class Cursor
     else 
       raise ArgumentError.new("Position not on the board")
     end
+  end
+
+  def toggle_selected
+    @selected = @selected ? false : true
   end
 end

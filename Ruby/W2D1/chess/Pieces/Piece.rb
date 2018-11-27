@@ -1,6 +1,6 @@
 require "singleton"
-require_relative "Pieces/sliding_piece.rb"
-require_relative "Pieces/stepping_piece.rb"
+require_relative "sliding_piece.rb"
+require_relative "stepping_piece.rb"
 
 class Piece
   attr_reader :color
@@ -140,7 +140,7 @@ class Pawn < Piece
 
     # enumerable to check for more than one step
     forward_steps.each do |forward_step|
-      forward_x = self.pos[0] + forward_dir + forward_step
+      forward_x = self.pos[0] + forward_dir + (forward_step * forward_dir)
       forward_y = self.pos[1]
       possible_moves << [forward_x, forward_y] if self.board[forward_x][forward_y].empty?
     end
