@@ -18,7 +18,7 @@ class Deck
     cards = []
 
     SUITS.each do |suit|
-      (1..13).each do |num|
+      (2..14).each do |num|
         cards << Card.new(num, suit)
       end
     end

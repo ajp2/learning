@@ -4,7 +4,7 @@ require "deck.rb"
 describe Deck do
   subject(:deck) { Deck.new }
   let(:suits) { ["S", "H", "D", "C"] }
-  let(:nums) { (1..13).to_a }
+  let(:nums) { (2..14).to_a }
 
   describe "#initialize" do
     it "creates an array of length 52" do
