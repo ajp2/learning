@@ -9,6 +9,11 @@ class Deck
     @card_deck = populate
   end
 
+  def shuffle!
+    @card_deck = @card_deck.shuffle
+  end
+
+  protected
   def populate
     cards = []
 
@@ -22,5 +27,5 @@ class Deck
   end
 end
 
-d = Deck.new
-p d.card_deck
+# d = Deck.new
+# p d.card_deck
