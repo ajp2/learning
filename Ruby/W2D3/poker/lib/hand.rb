@@ -1,12 +1,21 @@
 require_relative "card.rb"
 
 class Hand
-  attr_reader :cards, :nums, :suits
+  attr_reader :nums, :suits
+  attr_accessor :cards
 
   def initialize(cards)
     @cards = cards
     @nums = @cards.map { |card| card.number }
     @suits = @cards.map { |card| card.suit }
+  end
+
+  def to_s
+    cards_str = ""
+    @cards.each do |card|
+      cards_str += card.value + ", "
+    end
+    cards_str
   end
 
   def strength

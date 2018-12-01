@@ -1,12 +1,13 @@
 require_relative "card.rb"
 
 class Deck
-  attr_reader :card_deck
+  attr_accessor :card_deck
 
   SUITS = ["S", "H", "D", "C"]
 
   def initialize
     @card_deck = populate
+    @card_deck.shuffle!
   end
 
   def shuffle!

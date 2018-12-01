@@ -1,4 +1,4 @@
-# require "rspec"
+require "rspec"
 require "card.rb"
 
 describe Card do
