@@ -32,8 +32,11 @@ class Game
   def play
     deal_cards
     place_bet
-    discard_cards
-    place_bet
+    if !check_folded_players
+      discard_cards
+      place_bet
+    end
+    
     winner = reveal
     puts "#{winner[0]}, you win"
 
@@ -49,7 +52,7 @@ class Game
 
     @players.each do |player|
       next if @folded_players.include?(player)
-      print player.name + " " + player.hand.to_s
+      print player.name + ": " + player.hand.to_s
       puts
       hand_strength = player.hand.strength
       if hand_strength > strongest[1]
@@ -121,5 +124,5 @@ class Game
 
 end
 
-g = Game.new(2)
+g = Game.new(3)
 g.play
