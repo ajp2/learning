@@ -29,17 +29,18 @@ def largest_contiguous_subsum(arr)
 end
 
 def largest_contiguous_subsum(arr)
-  max = arr[0]
+  largest = arr.first
+  current = arr.first
 
-  arr.each_with_index do |ele, idx|
-    left = arr[0...idx].empty? ? arr[0] : arr[0...idx].sum
-    right = arr[idx..-1].empty? ? arr[0] : arr[idx..-1].sum
+  return arr.max if arr.all? { |num| num < 0 }
 
-    subarray_max = [left, ele, right].max
-    max = subarray_max if subarray_max > max
+  arr.drop(1).each do |num|
+    current = 0 if current < 0
+    current += num
+    largest = current if current > largest
   end
 
-  max
+  largest
 end
 
 # list = [5, 3, -7]
