@@ -7,31 +7,25 @@ class MinMaxStackQueue
   end
 
   def size
-    @store.size
+    @store.size + @store_reversed.size
   end
 
   def empty?
-    @store.empty?
+    @store.empty? && @store_reversed.empty?
   end
 
   def max
-    if !@store.empty? && !@store_reversed.empty?
-      return [@store.max, @store_reversed.max].max
-    elsif !@store.empty?
-      return @store.max
-    else
-      return @store_reversed.max
-    end
+    maxes = []
+    maxes << @store.max unless @store.empty?
+    maxes << @store_reversed.max unless @store_reversed.empty?
+    maxes.max
   end
 
   def min
-    if !@store.empty? && !@store_reversed.empty?
-      return [@store.min, @store_reversed.min].min
-    elsif !@store.empty?
-      return @store.min
-    else
-      return @store_reversed.min
-    end
+    mins = []
+    mins << @store.min unless @store.empty?
+    mins << @store_reversed.min unless @store_reversed.empty?
+    mins.min
   end
 
   def enqueue(ele)

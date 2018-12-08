@@ -7,11 +7,11 @@ class StackQueue
   end
 
   def size
-    @store.size
+    @store.size + @store_reversed.size
   end
 
   def empty?
-    @store.empty?
+    @store.empty? && @store_reversed.empty?
   end
 
   def enqueue(ele)
@@ -25,12 +25,9 @@ class StackQueue
 
   private
   def reverse
-    min_max = @store.peek[1..-1]
     until @store.empty?
       @store_reversed.push(@store.pop)
     end
-    val = @store_reversed.pop[0]
-    @store_reversed.push([val] + min_max)
   end
 
 end

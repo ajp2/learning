@@ -36,10 +36,10 @@ class MinMaxStack
 
   private
   def set_max(ele)
-    ele > peek[1] ? ele : peek[1]
+    empty? ? ele : [max, ele].max
   end
 
   def set_min(ele)
-    ele < peek[2] ? ele : peek[2]
+    empty? ? ele : [min, ele].min
   end
 end

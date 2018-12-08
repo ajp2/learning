@@ -5,8 +5,7 @@ def windowed_max_range(arr, w)
     window = arr.slice(idx...(idx + w))
 
     range = window.max - window.min
-    current_max_range = current_max_range.nil? ? range : current_max_range
-    current_max_range = range if range > current_max_range
+    current_max_range = range if !current_max_range || range > current_max_range
   end
 
   current_max_range

@@ -12,12 +12,8 @@ def windowed_max_range(arr, w)
     store.dequeue
     store.enqueue(arr[w + idx])
 
-    if current_max_range.nil?
-      current_max_range = store.max - store.min
-    else
-      range = store.max - store.min
-      current_max_range = range if range > current_max_range
-    end
+    range = store.max - store.min
+    current_max_range = range if !current_max_range || range > current_max_range
   end
 
   current_max_range
