@@ -32,11 +32,12 @@ def all_teachers_join
   # even if the department in NULL/nil.
   execute(<<-SQL)
     SELECT
-      teachers.name, depts.name
+      teachers.name,
+      depts.name
     FROM
       teachers
     LEFT JOIN
-      depts ON teachers.dept_id = depts.id
+      depts ON teachers.dept_id = depts.id;
   SQL
 end
 
@@ -46,11 +47,12 @@ def all_depts_join
   # the FROM and JOIN tables.
   execute(<<-SQL)
     SELECT
-      teachers.name, depts.name
+      teachers.name,
+      depts.name
     FROM
       teachers
     RIGHT JOIN
-      depts ON teachers.dept_id = depts.id
+      depts ON teachers.dept_id = depts.id;
   SQL
 end
 
@@ -60,7 +62,8 @@ def teachers_and_mobiles
   # #number or '07986 444 2266'
   execute(<<-SQL)
     SELECT
-      name, COALESCE(mobile, '07986 444 2266')
+      name,
+      COALESCE(mobile, '07986 444 2266')
     FROM
       teachers
   SQL
@@ -72,11 +75,12 @@ def teachers_and_depts
   # department.
   execute(<<-SQL)
     SELECT
-      teachers.name, COALESCE(depts.name, 'None')
+      teachers.name,
+      COALESCE(depts.name, 'None')
     FROM
       teachers
     LEFT JOIN
-      depts ON teachers.dept_id = depts.id
+      depts ON teachers.dept_id = depts.id;
   SQL
 end
 
@@ -86,9 +90,10 @@ def num_teachers_and_mobiles
   # NB: COUNT only counts non-NULL values.
   execute(<<-SQL)
     SELECT
-      COUNT(*), COUNT(mobile)
+      COUNT(*),
+      COUNT(mobile)
     FROM
-      teachers
+      teachers;
   SQL
 end
 
@@ -98,12 +103,13 @@ def dept_staff_counts
   # Engineering department is listed.
   execute(<<-SQL)
     SELECT
-      depts.name, COUNT(teachers.id)
+      depts.name,
+      COUNT(teachers.id)
     FROM
       teachers
     RIGHT JOIN
       depts ON teachers.dept_id = depts.id
-    GROUP BY depts.name
+    GROUP BY depts.name;
   SQL
 end
 
@@ -112,16 +118,13 @@ def teachers_and_divisions
   # the the teacher is in dept 1 or 2 and 'Art' otherwise.
   execute(<<-SQL)
     SELECT
-      name, (
-        CASE
-          WHEN dept_id = 1 OR dept_id = 2 THEN
-            'Sci'
-          ELSE
-            'Art'
-        END
-      )
+      name,
+      CASE
+        WHEN dept_id = 1 OR dept_id = 2 THEN 'Sci'
+        ELSE 'Art'
+      END
     FROM
-      teachers
+      teachers;
   SQL
 end
 
@@ -131,17 +134,13 @@ def teachers_and_divisions_two
   # 'None' otherwise.
   execute(<<-SQL)
     SELECT
-      name, (
-        CASE
-          WHEN dept_id = 1 OR dept_id = 2 THEN
-            'Sci'
-          WHEN dept_id = 3 THEN
-            'Art'
-          ELSE
-            'None'
-        END
-      )
+      name,
+      CASE
+        WHEN dept_id = 1 OR dept_id = 2 THEN 'Sci'
+        WHEN dept_id = 3 THEN 'Art'
+        ELSE 'None'
+      END
     FROM
-      teachers
+      teachers;
   SQL
 end

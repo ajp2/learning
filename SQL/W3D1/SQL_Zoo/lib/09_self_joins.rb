@@ -32,7 +32,7 @@ def craiglockhart_id
     FROM
       stops
     WHERE
-      name = 'Craiglockhart'
+      name = 'Craiglockhart';
   SQL
 end
 
@@ -40,13 +40,14 @@ def lrt_stops
   # Give the id and the name for the stops on the '4' 'LRT' service.
   execute(<<-SQL)
     SELECT
-      stops.id, stops.name
+      stops.id,
+      stops.name
     FROM
       routes
     JOIN
       stops ON routes.stop_id = stops.id
     WHERE
-      routes.num = '4' AND routes.company = 'LRT'
+      routes.num = '4' AND routes.company = 'LRT';
   SQL
 end
 
@@ -80,7 +81,7 @@ def connecting_routes
     GROUP BY
       company, num
     HAVING
-      COUNT(*) = 2
+      COUNT(*) = 2;
   SQL
 end
 
@@ -113,7 +114,7 @@ def cl_to_lr
     JOIN
       routes b ON (a.company = b.company AND a.num = b.num)
     WHERE
-      a.stop_id = 53 AND b.stop_id = 149
+      a.stop_id = 53 AND b.stop_id = 149;
   SQL
 end
 
@@ -155,7 +156,7 @@ def cl_to_lr_by_name
     JOIN
       stops stopb ON (b.stop_id = stopb.id)
     WHERE
-      stopa.name = 'Craiglockhart' AND stopb.name = 'London Road'
+      stopa.name = 'Craiglockhart' AND stopb.name = 'London Road';
   SQL
 end
 
@@ -163,14 +164,15 @@ def haymarket_and_leith
   # Give the company and num of the services that connect stops
   # 115 and 137 ('Haymarket' and 'Leith')
   execute(<<-SQL)
-    SELECT
-      DISTINCT a.company, a.num
+    SELECT DISTINCT
+      a.company,
+      a.num
     FROM
       routes a
     JOIN
       routes b ON (a.company = b.company AND a.num = b.num)
     WHERE
-      a.stop_id = 115 AND b.stop_id = 137
+      a.stop_id = 115 AND b.stop_id = 137;
   SQL
 end
 
@@ -179,7 +181,8 @@ def craiglockhart_and_tollcross
   # 'Craiglockhart' and 'Tollcross'
   execute(<<-SQL)
     SELECT
-      a.company, a.num
+      a.company,
+      a.num
     FROM
       routes a
     JOIN
@@ -189,7 +192,7 @@ def craiglockhart_and_tollcross
     JOIN
       stops stopb ON (b.stop_id = stopb.id)
     WHERE
-      stopa.name = 'Craiglockhart' AND stopb.name = 'Tollcross'
+      stopa.name = 'Craiglockhart' AND stopb.name = 'Tollcross';
   SQL
 end
 
@@ -211,7 +214,7 @@ def start_at_craiglockhart
     JOIN
       stops stopb ON (b.stop_id = stopb.id)
     WHERE
-      stopa.name = 'Craiglockhart'
+      stopa.name = 'Craiglockhart';
   SQL
 end
 
@@ -244,6 +247,6 @@ def craiglockhart_to_sighthill
     stops destination_stops ON finish.stop_id = destination_stops.id
   WHERE
     origin_stops.name = 'Craiglockhart'
-      AND destination_stops.name = 'Sighthill'
+      AND destination_stops.name = 'Sighthill';
   SQL
 end
