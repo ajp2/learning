@@ -46,6 +46,10 @@ class User
   def authored_replies
     Reply.find_by_user_id(@id)
   end
+
+  def followed_questions
+    QuestionFollow.followed_questions_for_user_id(@id)
+  end
 end
 
 class Question
@@ -79,6 +83,10 @@ class Question
     data.map { |datum| Question.new(datum) }
   end
 
+  def self.most_followed(n)
+    QuestionFollow.most_followed_questions(n)
+  end
+
   def initialize(options)
     @id = options['id']
     @title = options['title']
@@ -103,6 +111,10 @@ class Question
   def replies
     Reply.find_by_question_id(@id)
   end
+
+  def followers
+    QuestionFollow.followers_for_question_id(@id)
+  end
 end
 
 class QuestionFollow
@@ -120,6 +132,65 @@ class QuestionFollow
 
     return nil if data.length == 0
     QuestionFollow.new(data.first)
+  end
+
+  def self.followers_for_question_id(question_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+      SELECT
+        users.id,
+        users.fname,
+        users.lname
+      FROM
+        question_follows
+      JOIN
+        users ON question_follows.user_id = users.id
+      WHERE
+        question_id = ?
+    SQL
+
+    return nil if data.length == 0
+    data.map { |datum| User.new(datum) }
+  end
+
+  def self.followed_questions_for_user_id(user_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+      SELECT
+        questions.id,
+        questions.title,
+        questions.body,
+        questions.author_id
+      FROM
+        question_follows
+      JOIN
+        questions ON question_follows.question_id = questions.id
+      WHERE
+        user_id = ?
+    SQL
+
+    return nil if data.length == 0
+    data.map { |datum| Question.new(datum) }
+  end
+
+  def self.most_followed_questions(n)
+    data = QuestionsDatabase.instance.execute(<<-SQL, n)
+      SELECT
+        questions.id,
+        questions.title,
+        questions.body,
+        questions.author_id
+      FROM
+        question_follows
+      JOIN
+        questions on question_follows.question_id = questions.id
+      GROUP BY
+        question_id
+      ORDER BY
+        COUNT(*)
+      LIMIT ?
+    SQL
+
+    return nil if data.length == 0
+    data.map { |datum| Question.new(datum) }
   end
 
   def initialize(options)
