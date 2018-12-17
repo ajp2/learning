@@ -39,6 +39,27 @@ class User
     @lname = options['lname']
   end
 
+  def save
+    if @id.nil?
+      QuestionsDatabase.instance.execute(<<-SQL, self.fname, self.lname)
+        INSERT INTO
+          users (fname, lname)
+        VALUES
+          (?, ?)
+      SQL
+      @id = QuestionsDatabase.instance.last_insert_row_id
+    else
+      QuestionsDatabase.instance.execute(<<-SQL, self.fname, self.lname, @id)
+        UPDATE
+          users
+        SET
+          fname = ?, lname = ?
+        WHERE
+          id = ?
+      SQL
+    end
+  end
+
   def authored_questions
     Question.find_by_author_id(@id)
   end
@@ -116,6 +137,27 @@ class Question
     @body = options['body']
     @author_id = options['author_id']
   end
+
+  def save
+  if @id.nil?
+    QuestionsDatabase.instance.execute(<<-SQL, self.title, self.body, self.author_id)
+      INSERT INTO
+        questions (title, body, author_id)
+      VALUES
+        (?, ?, ?)
+    SQL
+    @id = QuestionsDatabase.instance.last_insert_row_id
+  else
+    QuestionsDatabase.instance.execute(<<-SQL, self.title, self.body, self.author_id, @id)
+      UPDATE
+        questions
+      SET
+        title = ?, body = ?, author_id = ?
+      WHERE
+        id = ?
+    SQL
+  end
+end
 
   def author
     data = QuestionsDatabase.instance.execute(<<-SQL, @author_id)
@@ -283,6 +325,27 @@ class Reply
     @user_id = options['user_id']
     @body = options['body']
   end
+  
+  def save
+    if @id.nil?
+      QuestionsDatabase.instance.execute(<<-SQL, self.question_id, self.reply_id, self.user_id, self.body)
+        INSERT INTO
+          replies (question_id, reply_id, user_id, body)
+        VALUES
+          (?, ?, ?, ?)
+      SQL
+      @id = QuestionsDatabase.instance.last_insert_row_id
+    else
+      QuestionsDatabase.instance.execute(<<-SQL, self.question_id, self.reply_id, self.user_id, self.body, @id)
+        UPDATE
+          replies
+        SET
+          question_id = ?, reply_id = ?, user_id = ?, body = ?
+        WHERE
+          id = ?
+      SQL
+    end
+end
 
   def author
     data = QuestionsDatabase.instance.execute(<<-SQL, self.user_id)
