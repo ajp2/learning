@@ -1,6 +1,7 @@
 class ShortenedUrl < ApplicationRecord
   validates :long_url, :short_url, :user_id, presence: true
   validates :short_url, uniqueness: true
+  validate :no_spamming, :non_premium_max
 
   belongs_to(
     :submitter,
@@ -52,6 +53,19 @@ class ShortenedUrl < ApplicationRecord
     shortened_obj.save
   end
 
+  def self.prune(n)
+    not_visited_in_n = ShortenedUrl
+      .joins(:visits)
+      .where("visits.created_at < ?", n.minute.ago)
+    never_visited_older_than_n = ShortenedUrl
+      .left_outer_joins(:visits)
+      .where("visits.created_at IS NULL
+        AND shortened_urls.created_at < ?", n.minute.ago)
+
+    not_visited_in_n.each(&:destroy)
+    never_visited_older_than_n.each(&:destroy)
+  end
+
   def num_clicks
     self.visits.length
   end
@@ -62,6 +76,24 @@ class ShortenedUrl < ApplicationRecord
 
   def num_recent_uniques
     time_passed = Time.now - self.created_at
-    ShortenedUrl.select(:user_id).distinct.where(Time.now - created_at < 10*60).length
+    ShortenedUrl.select(:user_id).distinct.where("? < 10*60", time_passed).count
+  end
+
+  private
+  def no_spamming
+    urls_in_minute = ShortenedUrl
+      .where("created_at > ? AND user_id = ?", 1.minute.ago, user_id)
+      .count
+    p urls_in_minute
+    if urls_in_minute >= 5
+      errors[:base] << "Cannot create more than 5 urls in a minute"
+    end
+  end
+
+  def non_premium_max
+    num_urls = ShortenedUrl.where("user_id = ?", user_id).count
+    if !submitter.premium && num_urls >= 5
+      errors[:base] << "Premium is needed to add more than 5 urls"
+    end
   end
 end
