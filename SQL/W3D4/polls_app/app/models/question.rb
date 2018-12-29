@@ -10,8 +10,9 @@
 #
 
 class Question < ApplicationRecord
+  validates :text, presence: true
   
-  has_many: :answer_choices,
+  has_many :answer_choices,
     primary_key: :id,
     foreign_key: :question_id,
     class_name: 'AnswerChoice'
