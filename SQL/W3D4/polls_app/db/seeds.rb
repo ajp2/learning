@@ -59,11 +59,6 @@ second_question_choices = AnswerChoice.create([
 ])
 
 Response.destroy_all
-test_responses = Response.create([
-  { user_id: users.first.id, answer_choice_id: first_question_choices.first.id },
-  { user_id: users.first.id, answer_choice_id: second_question_choices.first.id }
-])
-
 testing_responses = Response.create([
   { user_id: users.second.id, answer_choice_id: first_question_choices.second.id },
   { user_id: users.second.id, answer_choice_id: second_question_choices.second.id }
