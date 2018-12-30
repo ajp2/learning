@@ -15,7 +15,8 @@ class Question < ApplicationRecord
   has_many :answer_choices,
     primary_key: :id,
     foreign_key: :question_id,
-    class_name: 'AnswerChoice'
+    class_name: 'AnswerChoice',
+    dependent: :destroy
 
   belongs_to :poll,
     primary_key: :id,
@@ -27,10 +28,15 @@ class Question < ApplicationRecord
     source: :responses
 
   def results
-    choices = self.answer_choices.includes(:responses)
+    answer_choices_count = self.answer_choices
+      .select("answer_choices.*, COUNT(responses.id) AS num_votes")
+      .left_outer_joins(:responses)
+      .where(answer_choices: { question_id: self.id })
+      .group("answer_choices.id")
+
     results_hash = {}
-    choices.each do |choice|
-      results_hash[choice.text] = choice.responses.length
+    answer_choices_count.each do |answer_choice|
+      results_hash[answer_choice.text] = answer_choice.num_votes
     end
 
     results_hash
@@ -38,3 +44,13 @@ class Question < ApplicationRecord
 end
 
 
+# SELECT
+#   answer_choices.*, COUNT(responses.id)
+# FROM
+#   answer_choices
+# LEFT OUTER JOIN
+#   responses ON answer_choices.id = responses.answer_choice_id
+# WHERE
+#   answer_choices.question_id = ? (self.question_id)
+# GROUP BY
+#   answer_choices.id

@@ -11,6 +11,7 @@
 
 class Response < ApplicationRecord
   validate :respondent_already_answered?, :respondent_is_creator?
+  after_destroy :log_destroy_action
 
   belongs_to :answer_choice,
     primary_key: :id,
@@ -25,6 +26,10 @@ class Response < ApplicationRecord
   has_one :question,
     through: :answer_choice,
     source: :question
+
+  def log_destroy_action
+    puts "Response destroyed"
+  end
 
   def sibling_responses
     all_responses = self.question.responses.where.not(id: self.id)

@@ -11,6 +11,7 @@
 
 class AnswerChoice < ApplicationRecord
   validates :text, presence: true
+  after_destroy :log_destroy_action
   
   belongs_to :question,
     primary_key: :id,
@@ -20,5 +21,10 @@ class AnswerChoice < ApplicationRecord
   has_many :responses,
     primary_key: :id,
     foreign_key: :answer_choice_id,
-    class_name: 'Response'
+    class_name: 'Response',
+    dependent: :destroy
+
+  def log_destroy_action
+    puts "AnswerChoice destroyed"
+  end
 end
