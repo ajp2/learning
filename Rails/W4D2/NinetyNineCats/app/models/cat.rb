@@ -5,6 +5,8 @@ class Cat < ApplicationRecord
   validates :color, inclusion: COLORS
   validates :sex, inclusion: ["M", "F"]
 
+  has_many :cat_rental_requests, dependent: :destroy
+
   def age
     days = (Time.now.to_date - self.birth_date).to_i
     days / 365
