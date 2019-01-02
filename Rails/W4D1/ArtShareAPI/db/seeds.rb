@@ -23,4 +23,8 @@ ActiveRecord::Base.transaction do
   as2 = ArtworkShare.create!(artwork_id: a2.id, viewer_id: u3.id)
   as3 = ArtworkShare.create!(artwork_id: a3.id, viewer_id: u3.id)
   as4 = ArtworkShare.create!(artwork_id: a1.id, viewer_id: u3.id)
+
+  c1 = Comment.create!(user_id: u1.id, artwork_id: a2.id, body: "Looking good!")
+  c1 = Comment.create!(user_id: u1.id, artwork_id: a3.id, body: "Nice!")
+  c1 = Comment.create!(user_id: u3.id, artwork_id: a1.id, body: "dkvjasdfiowehpoihklsdfa;sdlfh")
 end
