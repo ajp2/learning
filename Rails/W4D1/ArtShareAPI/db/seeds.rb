@@ -22,4 +22,5 @@ ActiveRecord::Base.transaction do
   as1 = ArtworkShare.create!(artwork_id: a1.id, viewer_id: u2.id)
   as2 = ArtworkShare.create!(artwork_id: a2.id, viewer_id: u3.id)
   as3 = ArtworkShare.create!(artwork_id: a3.id, viewer_id: u3.id)
+  as4 = ArtworkShare.create!(artwork_id: a1.id, viewer_id: u3.id)
 end
