@@ -1,20 +1,20 @@
 class CommentsController < ApplicationController
   def index
-    user = comment_params[:user_id]
-    artwork = comment_params[:artwork_id]
-    if user
-      render json: Comment.find_by(user_id: user)
-    elsif artwork
-      render json: Comment.find_by(artwork_id: artwork)
+    if params[:user_id]
+      comments = Comment.find_by(user_id: params[:user])
+    elsif params[:artwork_id]
+      comments = Comment.find_by(artwork_id: params[:artwork_id])
     else
-      render json: "Supply user_id or artwork_id"
+      comments = Comment.all
     end
+
+    render json: comments
   end
 
   def create
     comment = Comment.new(comment_params)
     if comment.save
-      render json: comment
+      render json: comment, status: :created
     else
       render json: comment.errors.full_messages, status: :unprocessable_entity
     end
