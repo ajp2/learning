@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
   has_many :cats
 
+  has_many :cat_rental_requests
+
   def self.find_by_credentials(user_name, password)
     user = User.find_by(user_name: user_name)
     return nil if user.nil?
