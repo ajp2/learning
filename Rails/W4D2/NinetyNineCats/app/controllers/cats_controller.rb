@@ -18,7 +18,7 @@ class CatsController < ApplicationController
   def create
     cat = Cat.new(cat_params)
     if cat.save
-      redirect_to cats_url
+      redirect_to cat_url(cat)
     else
       render 'new'
     end
@@ -32,7 +32,7 @@ class CatsController < ApplicationController
   def update
     cat = Cat.find(params[:id])
     if cat.update(cat_params)
-      redirect_to cat_url(params[:id])
+      redirect_to cat_url(cat)
     else
       render 'edit'
     end

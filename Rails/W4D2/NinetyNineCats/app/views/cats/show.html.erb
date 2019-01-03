@@ -28,6 +28,10 @@
     <tr>
       <td><%= rental.start_date %></td>
       <td><%= rental.end_date %></td>
+      <% if rental.status == "PENDING" %>
+        <td><a href="<%= approve_cat_rental_request_url(rental.id) %>">Approve</a></td>
+        <td><a href="<%= approve_cat_rental_request_url(rental.id) %>">Deny</a></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
