@@ -1,0 +1,15 @@
+<h2>Album: <%= @album.title %></h2>
+
+<form action="<%= edit_album_url(@album) %>" method="get">
+  <input type="submit" value="Add Track~~">
+</form>
+
+<form action="<%= edit_album_url(@album) %>" method="get">
+  <input type="submit" value="Edit">
+</form>
+
+<form action="<%= album_url(@album) %>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete">
+</form>

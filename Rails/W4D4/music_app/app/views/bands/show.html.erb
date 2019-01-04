@@ -1,5 +1,16 @@
 <h2><%= @band.name %></h2>
 
+<h3>Albums:</h3>
+<ul>
+  <% @albums.each do |album| %>
+    <li><a href="<%= album_url(album) %>"><%= album.title %></a></li>
+  <% end %>
+</ul>
+
+<form action="<%= new_band_album_url(@band) %>" method="get">
+  <input type="submit" value="Add Album">
+</form>
+
 <form action="<%= edit_band_url(@band) %>" method="get">
   <input type="submit" value="Edit">
 </form>

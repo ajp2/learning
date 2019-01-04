@@ -20,17 +20,18 @@ class BandsController < ApplicationController
   end
 
   def show
-    @band = Band.find(params[:band_id])
+    @band = Band.find(params[:id])
+    @albums = Album.where(band_id: params[:id])
     render 'show'
   end
 
   def edit
-    @band = Band.find(params[:band_id])
+    @band = Band.find(params[:id])
     render 'edit'
   end
 
   def update
-    band = Band.find(params[:band_id])
+    band = Band.find(params[:id])
     if band.update(band_params)
       redirect_to band_url(band)
     else
@@ -39,7 +40,7 @@ class BandsController < ApplicationController
   end
 
   def destroy
-    band = Band.find(params[:band_id])
+    band = Band.find(params[:id])
     band.destroy
     redirect_to bands_url
   end
