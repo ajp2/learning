@@ -9,15 +9,17 @@ class TracksController < ApplicationController
   end
 
   def new
-
+    @albums = Album.all
+    @track = Track.new
   end
 
   def edit
-
+    @albums = Album.all
+    @track = Track.find(params[:id])
   end
 
   def show
-
+    @track = Track.find(params[:id])
   end
 
   def update

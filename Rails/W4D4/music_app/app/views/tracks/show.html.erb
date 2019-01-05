@@ -1,0 +1,19 @@
+<h2><%= @track.title %></h2>
+
+<p><%= ugly_lyrics(@track.lyrics) %></p>
+
+<section class="notes">
+  <%= render 'notes/note', track: @track %>
+</section>
+
+<%= render 'notes/form' %>
+
+<a href="<%= edit_track_url(@track) %>">Edit Track</a>
+
+<form action="<%= track_url(@track) %>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete Track">
+</form>
+
+<a href="<%= album_url(@track.album) %>"><%= @track.album.title %></a>

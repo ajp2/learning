@@ -1,7 +1,14 @@
 <h2>Album: <%= @album.title %></h2>
 
-<form action="<%= edit_album_url(@album) %>" method="get">
-  <input type="submit" value="Add Track~~">
+<h3>Tracks:</h3>
+<ul>
+  <% @album.tracks.each do |track| %>
+    <li><a href="<%= track_url(track) %>"><%= track.title %></a></li>
+  <% end %>
+</ul>
+
+<form action="<%= new_album_track_url(@album) %>" method="get">
+  <input type="submit" value="Add Track">
 </form>
 
 <form action="<%= edit_album_url(@album) %>" method="get">
