@@ -7,7 +7,9 @@ class UsersController < ApplicationController
       log_in_user!(user)
       redirect_to user_url(user)
     else
-      render json: user.errors.full_messages
+      flash.now[:errors] = "Need email and password"
+      render 'new'
+      # render json: user.errors.full_messages
     end
   end
 
