@@ -1,1 +1,19 @@
-<h1><%= current_user.username %></h1>
+<h3><%= @user.username.capitalize %>'s Profile</h3>
+
+<ul>
+<% @user.goals.each do |goal| %>
+  <% if goal.private %>
+    <% if current_user && current_user.id == goal.user_id %>
+      <li><a href="<%= goal_url(goal) %>"><%= goal.title %></a></li>  
+    <% end %>
+  <% else %>
+    <li><a href="<%= goal_url(goal) %>"><%= goal.title %></a></li>
+  <% end %>
+<% end %>
+</ul>
+
+<br><br>
+
+<a href="<%= new_goal_url %>">Create a New Goal</a>
+<br>
+<a href="<%= users_url %>">Home</a>

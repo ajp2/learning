@@ -10,6 +10,27 @@
   </head>
 
   <body>
+    <h1>Goaling App</h1>
+
+    <% if current_user.nil? %>
+      <a href="<%= new_user_url %>">Sign Up</a>
+      <br>
+      <a href="<%= new_session_url %>">Log In</a>
+    <% else %>
+      <h2>Welcome <%= current_user.username %></h2>
+      <form action="<%= session_url %>" method="post">
+        <input type="hidden" name="_method" value="delete">
+
+        <input type="hidden"
+                name="authenticity_token"
+                value="<%= form_authenticity_token %>">
+
+      <input type="submit" value="Log Out">
+      </form>
+    <% end %>
+
+    <br>
+
     <%= yield %>
   </body>
 </html>

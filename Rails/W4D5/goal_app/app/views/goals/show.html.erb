@@ -1,0 +1,23 @@
+<h3>Specific goal</h3>
+
+<p>Title: <%= @goal.title %></p>
+<p>Details: <%= @goal.details %></p>
+<p>Finished?: <%= @goal.completed ? "Completed" : "Ongoing" %></p>
+<p>Visibility: <%= @goal.private ? "Private" : "Hidden" %></p>
+<p>Completed?</p>
+
+<% btn_txt = @goal.completed ? "Oops! Did not complete" : "Complete" %>
+
+<form action="<%= goal_url(@goal) %>" method="post">
+  <input type="hidden" name="authenticity_token" value="form_authenticity_token">
+  <input type="hidden" name="_method" value="patch">
+  <input type="submit" value="<%= btn_txt %>">
+</form>
+
+
+<br><br>
+<a href="<%= new_goal_url %>">Create a New Goal</a>
+<br>
+<a href="<%= user_url(current_user) %>">Back to Profile</a>
+<br>
+<a href="<%= users_url %>">Home</a>

@@ -26,7 +26,7 @@ feature 'logging in' do
     visit new_session_url
     fill_in 'Username', with: 'admin'
     fill_in 'Password', with: 'password'
-    click_on 'Log In'
+    click_on 'LogIn'
   end
 
   scenario 'shows username on the homepage after login' do
