@@ -1,1 +1,47 @@
 // Use the gear_dropdown.png screenshot as a style guide
+
+.right-nav li:last-of-type {
+  position: relative;
+}
+
+.gear-dropdown {
+  position: absolute;
+  right: 10px;
+  z-index: 1;
+  background: #fff;
+  border: 1px solid $light_gray;
+  padding: 10px;
+  box-shadow: -1px 4px 6px 1px rgba(0, 0, 0, 0.09);
+  color: $dark-gray;
+}
+
+.editions > li {
+  padding: 5px 150px 5px 5px;
+  text-decoration: none;
+}
+
+.editions li a {
+  text-decoration: none;
+}
+
+.help a {
+  display: block;
+  padding: 5px 150px 5px 5px;
+  color: $blue;
+}
+
+.help li:last-of-type{
+  text-transform: capitalize;
+}
+
+.dropdown-subtitle {
+  display: block;
+  padding: 5px 150px 5px 5px;
+  cursor: default;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.editions > li:hover {
+  background: $light-gray;
+}

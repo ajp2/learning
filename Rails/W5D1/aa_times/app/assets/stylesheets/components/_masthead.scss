@@ -4,6 +4,7 @@
 	align-items: center;
 	border-bottom: 2px solid black;
 	position: relative;
+	border-top: 1px solid $light_gray;
 }
 
 .language-nav {
@@ -23,6 +24,10 @@
 	font-family: $sans-serif;
 	font-size: 10px;
 	color: $dark-gray;
+}
+
+.language-list li:first-of-type {
+	font-weight: 700;
 }
 
 .language-nav ul {
@@ -45,6 +50,10 @@
 .masthead-links li {
 	margin-left: 10px;
 	border-right: 1px solid $light-gray;
+}
+
+.masthead-links li:last-of-type {
+	border-right: none;
 }
 
 .masthead-links button {

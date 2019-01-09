@@ -1,0 +1,19 @@
+.sections-nav {
+  font-family: $sans-serif;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.sections-nav ul {
+  display: flex;
+  justify-content: center;
+}
+
+.sections-list li {
+  margin-left: 20px;
+}
+
+.sections-list li:hover {
+  background-color: $light-gray;
+}
