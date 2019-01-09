@@ -1,0 +1,10 @@
+@media all and (max-width: 1000px) {
+  .sections-nav, .language-nav, .right-nav {
+    display: none;
+  }
+
+  .left-nav {
+    margin: 0;
+    padding: 10px;
+  }
+}
