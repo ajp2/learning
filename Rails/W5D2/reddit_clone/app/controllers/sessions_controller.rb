@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     )
     if @user
       login_user!(@user)
-      redirect_to user_url(@user)
+      redirect_to subs_url
     else
       flash[:errors] = "Invalid username or password"
       redirect_to new_session_url
@@ -20,6 +20,6 @@ class SessionsController < ApplicationController
   def destroy
     current_user.reset_session_token!
     session[:session_token] = nil
-    redirect_to new_session_url
+    redirect_to subs_url
   end
 end

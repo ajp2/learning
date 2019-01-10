@@ -10,6 +10,29 @@
   </head>
 
   <body>
+
+    <a href="<%= subs_url %>">Home</a>
+
+    <br>
+
+    <% if logged_in? %>
+
+      <a href="<%= new_sub_url %>">Create a sub</a>
+      <br>
+      <form action="<%= session_url %>" method="post">
+        <%= auth_token %>
+        <input type="hidden" name="_method" value="delete">
+        <input type="submit" value="Log Out">
+      </form>
+
+    <% else %>
+
+      <a href="<%= new_user_url %>">Sign Up</a>
+      <br>
+      <a href="<%= new_session_url %>">Log In</a>
+      
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
