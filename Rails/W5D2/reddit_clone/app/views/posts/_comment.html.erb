@@ -1,6 +1,6 @@
 <ul>
-  <% comment.child_comments.each do |child_comment| %>
+  <% all_comments[comment.id].each do |child_comment| %>
     <li><a href="<%= comment_url(child_comment) %>"><%= child_comment.content %></a></li>
-    <%= render 'comment', comment: child_comment %>
+    <%= render 'comment', comment: child_comment, all_comments: all_comments %>
   <% end %>
 </ul>

@@ -7,10 +7,10 @@
 <% end %>
 
 <ul>
-  <% @post.comments.where(parent_comment_id: nil).each do |comment| %>
+  <% @all_comments[nil].each do |comment| %>
     <li>
       <a href="<%= comment_url(comment) %>"><%= comment.content %></a>
-      <%= render 'comment', comment: comment %>
+      <%= render 'comment', comment: comment, all_comments: @all_comments %>
     </li>
   <% end %>
 </ul>

@@ -19,6 +19,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @all_comments = comments_by_parent_id(@post)
     render 'show'
   end
 
@@ -45,8 +46,9 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:title, :url, :content, sub_ids: [])
-    # sub_id => checkboxes, arrays
+    set_params = params.require(:post).permit(:title, :url, :content, sub_ids: [])
+    set_params[:sub_id] = set_params[:sub_ids][-1]
+    set_params
   end
 
   def require_post_author
@@ -55,5 +57,15 @@ class PostsController < ApplicationController
       flash[:errors] = "Only the author of a post can edit it"
       redirect_to post_url(@post)
     end
+  end
+
+  def comments_by_parent_id(post)
+    comments_arr = post.comments
+    comments_hash = Hash.new  { |h, k| h[k] = [] }
+
+    comments_arr.each do |comment|
+      comments_hash[comment.parent_comment_id].push(comment)
+    end
+    comments_hash
   end
 end

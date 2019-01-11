@@ -4,6 +4,8 @@
 
 <% if logged_in? && current_user.id == @sub.user_id %>
   <a href="<%= edit_sub_url %>">Edit Sub</a>
+  <br>
+  <a href="<%= new_post_url %>">Create a Post</a>
 <% end %>
 
 <ul>
