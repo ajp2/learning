@@ -5,3 +5,9 @@
 <% if logged_in? && current_user.id == @sub.user_id %>
   <a href="<%= edit_sub_url %>">Edit Sub</a>
 <% end %>
+
+<ul>
+  <% @sub.posts.each do |post| %>
+    <li><a href="<%= post_url(post) %>"><%= post.title %></a></li>
+  <% end %>
+</ul>
