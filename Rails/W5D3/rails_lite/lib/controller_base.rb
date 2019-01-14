@@ -7,11 +7,12 @@ class ControllerBase
   attr_reader :req, :res, :params
 
   # Setup the controller
-  def initialize(req, res, route_params)
+  def initialize(req, res, route_params = {})
     @req = req
     @res = res
     @params = req.params.merge(route_params)
     @already_built_response = false
+    @@protect_from_forgery ||= false
   end
 
   # Helper method to alias @already_built_response
@@ -64,6 +65,17 @@ class ControllerBase
 
   # use this with the router to call action_name (:index, :show, :create...)
   def invoke_action(name)
+    if @@protect_from_forgery
+      cookie = @req.cookies["authenticity_token"]
+      unless cookie && cookie == params["authenticity_token"]
+        raise "Invalid authenticity token"
+      end
+    else
+      @token ||= generate_authenticity_token
+      res.set_cookie('authenticity_token', value: @token, path: '/')
+      @token
+    end
+    
     self.send(name)
     render(name) unless already_built_response?
   end
