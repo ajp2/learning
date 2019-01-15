@@ -1,5 +1,5 @@
 Array.prototype.uniq = function() {
-  uniq_arr = [];
+  let uniq_arr = [];
   this.forEach(num => {
     if (!uniq_arr.includes(num)) {
       uniq_arr.push(num);
@@ -12,7 +12,7 @@ Array.prototype.uniq = function() {
 // console.log([1,1,3,5,6].uniq());
 
 Array.prototype.twoSum = function() {
-  twoSumArr = []
+  const twoSumArr = []
   this.forEach((num1, idx1) => {
     this.forEach((num2, idx2) => {
       if (idx2 > idx1 && num1 + num2 === 0) {
