@@ -113,6 +113,8 @@ function sumOfNPrimes(num) {
 // console.log(sumOfNPrimes(1));
 // console.log(sumOfNPrimes(4));
 
+
+
 function titleize(arr, cb) {
   new_arr = arr.map(el => `Mx. ${el} Jingleheimer Schmidt`);
   cb(new_arr);
@@ -179,7 +181,7 @@ let herd = [ellie, charlie, kate, micah];
 function dinerBreakfast() {
   order = ["cheesy scrambled eggs"];
   console.log(`I'd like ${order.join(" and ")} please`);
-  
+
   return function(food_item) {
     order.push(food_item);
     console.log(`I'd like ${order.join(" and ")} please`);
