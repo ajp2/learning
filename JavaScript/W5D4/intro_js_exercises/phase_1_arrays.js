@@ -16,7 +16,7 @@ Array.prototype.twoSum = function() {
   this.forEach((num1, idx1) => {
     this.forEach((num2, idx2) => {
       if (idx2 > idx1 && num1 + num2 === 0) {
-        twoSumArr.push(idx1, idx2);
+        twoSumArr.push([idx1, idx2]);
       }
     });
   });
@@ -27,14 +27,15 @@ Array.prototype.twoSum = function() {
 // console.log([2, -2, 4, 9, 0 ,-9].twoSum());
 
 Array.prototype.transpose = function() {
-  transposed = [];
+  transposed = new Array(this.length).fill(undefined).map(() => new Array(this.length).fill(undefined));
+
   this.forEach((num1, idx1) => {
     this.forEach((num2, idx2) => {
-      transposed.push(this[idx2][idx1]);
+      transposed[idx1][idx2] = (this[idx2][idx1]);
     });
   });
 
   return transposed;
 };
 
-// console.log([[1,2,3], [4,5,6], [7,8,9]].transpose());
+console.log([[1,2,3], [4,5,6], [7,8,9]].transpose());

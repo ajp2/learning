@@ -19,18 +19,17 @@ Array.prototype.myMap = function(cb) {
 // console.log([1,2,3].myMap(e => e * 2));
 
 Array.prototype.myReduce = function(cb, initialValue) {
-  let accPassed = initialValue ? true : false;
-  let acc = initialValue || this[0];
+  let arr = this;
 
-  this.myEach((e, idx) => {
-    if (!accPassed && idx == 0) {
-      // skip
-    } else {
-      acc = cb(e, acc);
-    }
-  });
+  if (initialValue === undefined) {
+    initialValue = arr[0];
+    arr = arr.slice(1);
+  }
 
-  return acc;
+  let result = initialValue;
+  arr.myEach(el => result = cb(result, el));
+  
+  return result;
 };
 
 // console.log([1,2,3].myReduce(function(acc, el) {

@@ -4,22 +4,31 @@ function Cat(name, owner) {
 }
 
 Cat.prototype.cuteStatement = function() {
-  return `Everyone loves ${this.name}`;
+  return `${this.owner} loves ${this.name}. :3`;
 };
+
+const cat1 = new Cat("Markov", "Ned");
+const cat2 = new Cat("Breakfast", "Devon");
+
+console.log(cat1.cuteStatement());
+console.log(cat2.cuteStatement());
+
+Cat.prototype.cuteStatement = function() {
+  return `Everyone loves ${this.name}!`;
+};
+
+console.log(cat1.cuteStatement());
+console.log(cat2.cuteStatement());
 
 Cat.prototype.meow = function() {
   return "meow!!";
 };
 
-bob = new Cat("bob", "a");
-geoff = new Cat("geoff", "a");
-fred = new Cat("fred", "b");
+console.log(cat1.meow());
 
-fred.meow = function() {
-  return "meow!!!!";
+cat1.meow = function() {
+  return "purr";
 };
 
-console.log(bob.cuteStatement());
-console.log(fred.cuteStatement());
-console.log(fred.meow());
-
+console.log(cat1.meow());
+console.log(cat2.meow());

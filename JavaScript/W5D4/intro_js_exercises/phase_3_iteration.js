@@ -6,9 +6,7 @@ Array.prototype.bubbleSort = function() {
     sorted = true;
     for (let i = 0; i < sorted_arr.length - 1; i++) {
       if (sorted_arr[i] > sorted_arr[i+1]) {
-        let tmp = sorted_arr[i];
-        sorted_arr[i] = sorted_arr[i+1];
-        sorted_arr[i+1] = tmp;
+        [sorted_arr[i], sorted_arr[i + 1]] = [sorted_arr[i + 1], sorted_arr[i]];
         sorted = false;
       }
     }
@@ -19,19 +17,17 @@ Array.prototype.bubbleSort = function() {
 
 // console.log([2,7,4,1,99,55,25,12,27].bubbleSort());
 
-String.prototype.substrings = function(substring) {
-  const substrings_arr = [];
-  const sub_length = substring.length;
+String.prototype.substrings = function() {
+  const substrings = [];
 
-  for (let i = 0; i < this.length - sub_length; i++) {
-    let current_sub = this.slice(i, i + sub_length);
-    if (current_sub === substring) {
-      substrings_arr.push(current_sub);
-    } 
+  for (let i = 0; i < this.length; i++) {
+    for (let j = i; j <= this.length; j++) {
+      substrings.push(this.slice(i, j));
+    }
   }
 
-  return substrings_arr;
+  return substrings;
 };
 
-// console.log("hello".substrings("el"));
+// console.log("hello".substrings());
 

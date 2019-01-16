@@ -124,5 +124,17 @@ function mergesort(arr) {
 // console.log(mergesort([3,1,9,5,7,2,24,8]));
 
 function subsets(arr) {
-  
+  if (arr.length === 0) {
+    return [arr];
+  }
+
+  let lastEl = arr.pop();
+  let subset = subsets(arr);
+  subset.slice().forEach(el => {
+    subset.push(el.concat(lastEl));
+  });
+
+  return subset;
 }
+
+// console.log(subsets([1,2,3]));
