@@ -27,7 +27,7 @@ class Board {
     const diags = this.checkDiagonals();
 
     if (rows) {
-      return rows[0]
+      return rows[0];
     } else if (cols) {
       return cols[0];
     } else {
@@ -118,15 +118,6 @@ class Board {
     printableBoard.forEach(row => console.log(row));
   }
 }
-
-// const b = new Board();
-// b.board[0][2] = "X";
-// b.board[1][1] = "X";
-// b.board[2][0] = "X";
-// b.board[1][2] = "O";
-// b.print();
-// console.log(b.won());
-// console.log(b.winner());
 
 
 module.exports = Board;

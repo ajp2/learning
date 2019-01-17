@@ -9,13 +9,13 @@ const reader = readline.createInterface({
 const completionCallback = function () {
   reader.question("Would you like to play again?", (res) => {
     if (res === "yes") {
-      let g = new Game(reader, completionCallback);
-      g.run();
+      let g = new Game();
+      g.run(reader, completionCallback);
     } else {
       reader.close();
     }
   })
 }
 
-let g = new Game(reader);
+let g = new Game();
 g.run(reader, completionCallback);
