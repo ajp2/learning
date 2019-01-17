@@ -3,6 +3,16 @@ class Board {
     this.board = new Array(3).fill(undefined).map(el => new Array(3).fill(undefined));
   }
 
+  draw() {
+    for (let i = 0; i < this.board.length; i++) {
+      if (this.board[i].some((el, idx) => this.empty([i, idx]))) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   won() {
     if (this.checkRows() || this.checkColumns() || this.checkDiagonals()) {
       return true;
@@ -79,8 +89,16 @@ class Board {
     return !this.board[pos[0]][pos[1]];
   }
 
+  validMove(pos) {
+    if ((pos[0] < 0 || pos[0] > 2) || (pos[1] < 0 || pos[1] > 2)) {
+      return false;
+    }
+
+    return true;
+  }
+
   place_mark(pos, mark) {
-    if (this.empty(pos)) {
+    if (this.validMove(pos) && this.empty(pos)) {
       this.board[pos[0]][pos[1]] = mark;
       return true;
     }
@@ -101,14 +119,14 @@ class Board {
   }
 }
 
-const b = new Board();
-b.board[0][2] = "X";
-b.board[1][1] = "X";
-b.board[2][0] = "X";
-b.board[1][2] = "O";
-b.print();
-console.log(b.won());
-console.log(b.winner());
+// const b = new Board();
+// b.board[0][2] = "X";
+// b.board[1][1] = "X";
+// b.board[2][0] = "X";
+// b.board[1][2] = "O";
+// b.print();
+// console.log(b.won());
+// console.log(b.winner());
 
 
 module.exports = Board;

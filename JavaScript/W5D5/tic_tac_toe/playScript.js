@@ -17,5 +17,5 @@ const completionCallback = function () {
   })
 }
 
-let g = new Game(reader, completionCallback);
-g.run();
+let g = new Game(reader);
+g.run(reader, completionCallback);
