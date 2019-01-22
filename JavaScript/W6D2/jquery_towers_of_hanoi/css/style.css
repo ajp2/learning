@@ -1,0 +1,47 @@
+.hanoi {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 400px;
+  margin: 50px 20px;
+  padding: 0;
+  border-bottom: 2px solid black;
+}
+
+ul:hover {
+  background: lightblue;
+}
+
+li {
+  height: 30px;
+  margin: 10px 50px;
+  background: blue;
+  list-style: none;
+}
+
+.disc-1 {
+  width: 80px;
+}
+
+.disc-2 {
+  width: 160px;
+}
+
+.disc-3 {
+  width: 240px;
+}
+
+.clicked {
+  background: yellow;
+}
