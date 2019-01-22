@@ -35,7 +35,11 @@ class View {
   clickTower(event) {
     if (this.initialTower !== undefined) {
       const secondTower = $(event.currentTarget).data("tower");
-      const returnVal = this.hanoigame.move(this.initialTower, secondTower)
+      
+      if (!this.hanoigame.move(this.initialTower, secondTower)) {
+        alert("Invalid move. Try again.");
+      }
+
       this.initialTower = undefined;
       this.render();
       this.$el.find("ul").removeClass("clicked");
