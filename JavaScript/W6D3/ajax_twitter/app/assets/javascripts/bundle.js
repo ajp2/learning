@@ -1,2 +1,255 @@
-!function(t){var e={};function o(l){if(e[l])return e[l].exports;var n=e[l]={i:l,l:!1,exports:{}};return t[l].call(n.exports,n,n.exports,o),n.l=!0,n.exports}o.m=t,o.c=e,o.d=function(t,e,l){o.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:l})},o.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},o.t=function(t,e){if(1&e&&(t=o(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var l=Object.create(null);if(o.r(l),Object.defineProperty(l,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var n in t)o.d(l,n,function(e){return t[e]}.bind(null,n));return l},o.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return o.d(e,"a",e),e},o.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},o.p="",o(o.s=0)}([function(t,e,o){const l=o(1);$(()=>{$("button.follow-toggle").each((t,e)=>{const o=$(e);new l(o)})})},function(t,e,o){const l=o(2);t.exports=class{constructor(t){this.$el=t,this.followState=this.$el.data("initial-follow-state"),this.userId=this.$el.data("user-id"),this.render(),this.$el.on("click",this.handleClick.bind(this))}render(){let t;"followed"===this.followState?(t="Unfollow!",this.$el.prop("disabled",!1)):"unfollowed"===this.followState?(t="Follow!",this.$el.prop("disabled",!1)):"following"===this.followState?this.$el.prop("disabled",!0):"unfollowing"===this.followState&&this.$el.prop("disabled",!0),this.$el.text(t)}handleClick(t){t.preventDefault(),"followed"===this.followState?(this.followState="unfollowing",this.render(),l.unfollowUser(this.userId).then(()=>{this.followState="unfollowed",this.render()})):(this.followState="unfollowing",this.render(),l.followUser(this.userId).then(()=>{this.followState="followed",this.render()}))}}},function(t,e){const o={followUser:t=>$.ajax({type:"POST",url:`${t}/follow`,dataType:"json"}),unfollowUser:t=>$.ajax({type:"DELETE",url:`${t}/follow`,dataType:"json"})};t.exports=o}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./frontend/twitter.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./frontend/api_util.js":
+/*!******************************!*\
+  !*** ./frontend/api_util.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+const APIUtil = {
+  followUser: id => {
+    return $.ajax({
+      type: "POST",
+      url: `${id}/follow`,
+      dataType: "json"
+    });
+  },
+
+  unfollowUser: id => {
+    return $.ajax({
+      type: "DELETE",
+      url: `${id}/follow`,
+      dataType: "json",
+    });
+  },
+
+  searchUsers(queryVal, success) {
+    $.ajax({
+      type: "GET",
+      url: "/users/search",
+      dataType: "json",
+      data: { query: queryVal },
+      success,
+      error: (xhr, ajaxOptions, err) => console.log("err")
+    });
+  }
+};
+
+module.exports = APIUtil;
+
+/***/ }),
+
+/***/ "./frontend/follow_toggle.js":
+/*!***********************************!*\
+  !*** ./frontend/follow_toggle.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtil = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js");
+
+class FollowToggle {
+  constructor($el) {
+    this.$el = $el;
+    this.followState = this.$el.data("initial-follow-state");
+    this.userId = this.$el.data("user-id");
+
+    this.render();
+    this.$el.on("click", this.handleClick.bind(this));
+  }
+
+  render() {
+    let text;
+    if (this.followState === "followed") {
+      text = "Unfollow!";
+      this.$el.prop("disabled", false);
+    } else if (this.followState === "unfollowed") {
+      text = "Follow!";
+      this.$el.prop("disabled", false);
+    } else if (this.followState === "following") {
+      this.$el.prop("disabled", true);
+    } else if (this.followState === "unfollowing") {
+      this.$el.prop("disabled", true);
+    }
+
+    this.$el.text(text);
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+
+    if (this.followState === "followed") {
+      this.followState = "unfollowing";
+      this.render();
+
+      APIUtil.unfollowUser(this.userId)
+        .then(() => {
+          this.followState = "unfollowed";
+          this.render();
+        });
+
+    } else {
+      this.followState = "unfollowing";
+      this.render();
+
+      APIUtil.followUser(this.userId)
+        .then(() => {
+          this.followState = "followed";
+          this.render();
+        });
+    }
+  }
+}
+
+module.exports = FollowToggle;
+
+/***/ }),
+
+/***/ "./frontend/twitter.js":
+/*!*****************************!*\
+  !*** ./frontend/twitter.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const FollowToggle = __webpack_require__(/*! ./follow_toggle */ "./frontend/follow_toggle.js");
+const UsersSearch = __webpack_require__(/*! ./users_search */ "./frontend/users_search.js");
+
+$(() => {
+  const followToggleBtn = $("button.follow-toggle");
+  followToggleBtn.each((idx, el) => {
+    const $el = $(el);
+    const followToggle = new FollowToggle($el);
+  });
+
+  $("nav.users-search").each((idx, el) => {
+    new UsersSearch($(el));
+  });
+});
+
+/***/ }),
+
+/***/ "./frontend/users_search.js":
+/*!**********************************!*\
+  !*** ./frontend/users_search.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtil = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js");
+
+class UsersSearch {
+  constructor($el) {
+    this.$el = $el;
+    this.$input = $el.find("input");
+    this.$ul = $el.find("ul.users");
+
+    this.$input.on("input", this.handleInput.bind(this));
+  }
+
+  handleInput(event) {
+    const inputVal = $(event.currentTarget).val();
+    APIUtil.searchUsers(inputVal, this.renderResults.bind(this));
+  }
+
+  renderResults(results) {
+    this.$ul.children().remove();
+    results.forEach(result => {
+      this.$ul.append($(`<li><a href="/users/${result.id}">${result.username}</a></li>`));
+    });
+  }
+}
+
+module.exports = UsersSearch;
+
+/***/ })
+
+/******/ });
 //# sourceMappingURL=bundle.js.map
