@@ -1,4 +1,5 @@
 const APIUtil = require("./api_util");
+const FollowToggle = require("./follow_toggle");
 
 class UsersSearch {
   constructor($el) {
@@ -16,8 +17,17 @@ class UsersSearch {
 
   renderResults(results) {
     this.$ul.children().remove();
+
     results.forEach(result => {
-      this.$ul.append($(`<li><a href="/users/${result.id}">${result.username}</a></li>`));
+      const $li = $(`<li><a href="/users/${result.id}">${result.username}</a></li>`);
+      const $btn = $("<button>");
+      new FollowToggle($btn, { 
+          userId: result.id, 
+          followState: result.followed ? "followed" : "unfollowed"
+        });
+      $li.append($btn)
+
+      this.$ul.append($li);
     });
   }
 }

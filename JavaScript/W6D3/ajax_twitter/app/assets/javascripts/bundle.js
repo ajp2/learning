@@ -136,10 +136,11 @@ module.exports = APIUtil;
 const APIUtil = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js");
 
 class FollowToggle {
-  constructor($el) {
+  constructor($el, options) {
     this.$el = $el;
-    this.followState = this.$el.data("initial-follow-state");
-    this.userId = this.$el.data("user-id");
+    this.followState = this.$el.data("initial-follow-state") ||
+                      options.followState;
+    this.userId = this.$el.data("user-id") || options.userId;
 
     this.render();
     this.$el.on("click", this.handleClick.bind(this));
@@ -224,6 +225,7 @@ $(() => {
 /***/ (function(module, exports, __webpack_require__) {
 
 const APIUtil = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js");
+const FollowToggle = __webpack_require__(/*! ./follow_toggle */ "./frontend/follow_toggle.js");
 
 class UsersSearch {
   constructor($el) {
@@ -241,8 +243,17 @@ class UsersSearch {
 
   renderResults(results) {
     this.$ul.children().remove();
+
     results.forEach(result => {
-      this.$ul.append($(`<li><a href="/users/${result.id}">${result.username}</a></li>`));
+      const $li = $(`<li><a href="/users/${result.id}">${result.username}</a></li>`);
+      const $btn = $("<button>");
+      new FollowToggle($btn, { 
+          userId: result.id, 
+          followState: result.followed ? "followed" : "unfollowed"
+        });
+      $li.append($btn)
+
+      this.$ul.append($li);
     });
   }
 }

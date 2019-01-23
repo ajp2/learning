@@ -1,0 +1,38 @@
+body {
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+ul.users {
+  margin: 20px 0 0 0;
+  padding: 0;
+}
+
+ul.users > li {
+  list-style-type: none;
+  padding: 10px;
+}
+
+ul.users > li > a {
+  display: inline-block;
+  width: 50px;
+  padding-right: 50px;
+}
+
+button {
+  background-color: rgb(68, 189, 230);
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: rgb(9, 104, 182);
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: rgb(95, 95, 102);
+  cursor: default;
+}
