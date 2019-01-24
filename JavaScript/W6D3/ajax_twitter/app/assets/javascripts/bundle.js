@@ -220,6 +220,8 @@ class TweetCompose {
       let charsLeft = 140 - $(event.currentTarget).val().length;
       $(".chars-left").text(charsLeft);
     });
+
+    $(".add-mention").on("click", this.newUserSelect.bind(this));
   }
 
   submit(event) {
@@ -243,6 +245,24 @@ class TweetCompose {
     const ulId = this.$el.data("tweets-ul");
     const $li = $(`<li>${JSON.stringify(result)}</li>`);
     $(ulId).prepend($li);
+  }
+
+  newUserSelect(event) {
+    event.preventDefault();
+    
+    const userSelect = $("<select>").attr("name", "tweet[mentioned_user_ids][]");
+    userSelect.append($("<option>"));
+
+    window.users.forEach(user => {
+      userSelect.append($("<option>", {
+        value: user.id,
+        text: user.username
+      }));
+    });
+
+    const $label = $("<label>").text("Mention ");
+
+    $(".add-select").append(userSelect, $("<br>"));
   }
 }
 
