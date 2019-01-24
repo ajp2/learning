@@ -1,11 +1,17 @@
 const DOMNodeCollection = require("./dom_node_collection");
 
-const $1 = (selector) => {
-  if (selector instanceof HTMLElement) {
-    return new DOMNodeCollection([selector]);
+const $1 = (args) => {
+  if (args instanceof HTMLElement) {
+    return new DOMNodeCollection([args]);
+  } else if (args instanceof Function) {
+    const funcQueue = [];
+    funcQueue.push(args);
+    document.addEventListener("DOMContentLoaded", e => {
+      funcQueue.forEach(func => func());
+    })
   }
 
-  let els = document.querySelectorAll(selector);
+  let els = document.querySelectorAll(args);
   els = Array.from(els);
   return new DOMNodeCollection(els);
 }

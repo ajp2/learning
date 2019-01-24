@@ -104,7 +104,7 @@ eval("class DOMNodeCollection {\n  constructor(elList) {\n    this.elList = elLi
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const DOMNodeCollection = __webpack_require__(/*! ./dom_node_collection */ \"./src/dom_node_collection.js\");\n\nconst $1 = (selector) => {\n  if (selector instanceof HTMLElement) {\n    return new DOMNodeCollection([selector]);\n  }\n\n  let els = document.querySelectorAll(selector);\n  els = Array.from(els);\n  return new DOMNodeCollection(els);\n}\n\nwindow.$1 = $1;\n\nconsole.log($1(\"body\"));\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("const DOMNodeCollection = __webpack_require__(/*! ./dom_node_collection */ \"./src/dom_node_collection.js\");\n\nconst $1 = (args) => {\n  if (args instanceof HTMLElement) {\n    return new DOMNodeCollection([args]);\n  } else if (args instanceof Function) {\n    const funcQueue = [];\n    funcQueue.push(args);\n    document.addEventListener(\"DOMContentLoaded\", e => {\n      funcQueue.forEach(func => func());\n    })\n  }\n\n  let els = document.querySelectorAll(args);\n  els = Array.from(els);\n  return new DOMNodeCollection(els);\n}\n\nwindow.$1 = $1;\n\nconsole.log($1(\"body\"));\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 
