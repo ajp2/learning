@@ -119,6 +119,15 @@ const APIUtil = {
       success,
       error: (xhr, ajaxOptions, err) => console.log("err")
     });
+  },
+
+  createTweet(data) {
+    return $.ajax({
+      type: "POST",
+      url: "/tweets",
+      dataType: "json",
+      data
+    });
   }
 };
 
@@ -193,6 +202,54 @@ module.exports = FollowToggle;
 
 /***/ }),
 
+/***/ "./frontend/tweet_compose.js":
+/*!***********************************!*\
+  !*** ./frontend/tweet_compose.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtil = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js");
+
+class TweetCompose {
+  constructor() {
+    this.$el = $(".tweet-compose");
+
+    this.$el.on("submit", this.submit.bind(this));
+    this.$el.find("textarea").on("input", (event) => {
+      let charsLeft = 140 - $(event.currentTarget).val().length;
+      $(".chars-left").text(charsLeft);
+    });
+  }
+
+  submit(event) {
+    event.preventDefault();
+    const data = $(event.currentTarget).serializeJSON();
+    $(event.currentTarget).find(":input").prop("disabled", true);
+
+    APIUtil.createTweet(data)
+      .then(this.handleSuccess.bind(this));
+  }
+
+  clearInput() {
+    this.$el.find("textarea").val("");
+    this.$el.find("select option").removeAttr("selected");
+  }
+
+  handleSuccess(result) {
+    this.clearInput();
+    this.$el.find(":input").prop("disabled", false);
+
+    const ulId = this.$el.data("tweets-ul");
+    const $li = $(`<li>${JSON.stringify(result)}</li>`);
+    $(ulId).prepend($li);
+  }
+}
+
+module.exports = TweetCompose;
+
+/***/ }),
+
 /***/ "./frontend/twitter.js":
 /*!*****************************!*\
   !*** ./frontend/twitter.js ***!
@@ -202,6 +259,7 @@ module.exports = FollowToggle;
 
 const FollowToggle = __webpack_require__(/*! ./follow_toggle */ "./frontend/follow_toggle.js");
 const UsersSearch = __webpack_require__(/*! ./users_search */ "./frontend/users_search.js");
+const TweetCompose = __webpack_require__(/*! ./tweet_compose */ "./frontend/tweet_compose.js");
 
 $(() => {
   const followToggleBtn = $("button.follow-toggle");
@@ -213,6 +271,8 @@ $(() => {
   $("nav.users-search").each((idx, el) => {
     new UsersSearch($(el));
   });
+
+  new TweetCompose();
 });
 
 /***/ }),

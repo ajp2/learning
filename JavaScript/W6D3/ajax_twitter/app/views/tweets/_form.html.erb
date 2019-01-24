@@ -1,5 +1,5 @@
 <h2>New Tweet!</h2>
-<form action="/tweets" method="POST">
+<form action="/tweets" method="POST" class="tweet-compose" data-tweets-ul="#feed">
   <input
       type="hidden"
       name="authenticity_token"
@@ -7,8 +7,9 @@
 
   <label>
     Content
-    <textarea name="tweet[content]"></textarea>
+    <textarea name="tweet[content]" maxlength="140"></textarea>
   </label>
+  <strong class="chars-left">140</strong>
   <br>
 
   <label>
