@@ -79,3 +79,58 @@ h1 {
   display: flex;
   justify-content: space-between;
 }
+
+.tabs {
+  display: inline-block;
+  font-size: 16px;
+
+}
+
+.tabs h1 {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.tabs > ul {
+  display: flex;
+}
+
+.tabs article {
+  background: lightblue;
+  height: 150px;
+  border: 2px solid #000;
+  border-top: none;
+  text-align: center;
+  line-height: 150px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.tab-header {
+  background: lightblue;
+  border-left: 2px solid #000;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 5px 15px;
+}
+
+.tab-header:last-of-type {
+  border-right: 2px solid #000;
+}
+
+.tab-header:hover {
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+.tab-header:focus {
+  background: green;
+}
+
+.active-tab {
+  font-weight: 700;
+  border-bottom: none;
+}
