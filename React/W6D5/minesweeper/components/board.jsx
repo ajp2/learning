@@ -10,7 +10,7 @@ class Board extends React.Component {
     const grid = this.props.board.grid;
 
     return (
-      <div>
+      <div className="board">
         {
           grid.map((row, idx) => {
             return (

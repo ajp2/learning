@@ -1,0 +1,23 @@
+.game > h1 {
+  text-align: center;
+}
+
+.board {
+  width: 243px;
+  height: 216px;
+  margin: 0 auto;
+}
+
+.tile {
+  float: left;
+  width: 20px;
+  height: 20px;
+  background: lightgray;
+  border-style: outset;
+  border-width: 2px;
+  line-height: 20px;
+  text-align: center;
+  font-size: 14px;
+  padding-left: 3px;
+  position: relative;
+}

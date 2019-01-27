@@ -18,8 +18,8 @@ class Game extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>game.jsx</h1>
+      <div className="game">
+        <h1>Minesweeper</h1>
         <Board board={this.state.board} updasteGame={this.updateGame} />
       </div>
     );
