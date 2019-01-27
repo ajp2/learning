@@ -22,21 +22,21 @@ class Tile extends React.Component {
     let tileVal;
     let setClass;
 
-    if (tile.explored) {
-      tileVal = tile.adjacentBombCount();
-      setClass = " revealed";
+    if (tile.explored && tile.bombed) {
+      tileVal = "☢";
+      setClass = " bombed";
     } else if (tile.flagged) {
       tileVal = "⚑";
       setClass = " flagged";
-    } else if (tile.bombed && tile.explored) {
-      tileVal = "☢";
-      setClass = " bombed";
+    } else if (tile.explored) {
+      tileVal = tile.adjacentBombCount() || "";
+      setClass = " revealed";
     } else {
       setClass = "";
     }
 
     return (
-      <div className={`tile${setClass}`} onClick={handleClick}>{tileVal}</div>
+      <div className={`tile${setClass}`} onClick={this.handleClick}>{tileVal}</div>
       );
   }
 }
