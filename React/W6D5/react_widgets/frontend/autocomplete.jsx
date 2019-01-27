@@ -27,9 +27,9 @@ class AutoComplete extends React.Component {
     );
 
     return (
-      <div className="floated">
+      <div className="autocomplete">
         <h1>Autocomplete</h1>
-        <div className="autocomplete">
+        <div className="innerDiv">
           <input type="text" placeholder="Search..." value={this.state.inputVal} onChange={this.changeInput} />
           <ul>
             {

@@ -52,6 +52,12 @@ table {
 /* STYLES */
 
 .main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.main {
   width: 600px;
   margin: 20px auto;
 }
@@ -60,6 +66,10 @@ h1 {
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 15px;
+}
+
+.main-clock {
+  flex-basis: 100%;
 }
 
 .clock-display {
@@ -85,7 +95,6 @@ h1 {
   display: inline-block;
   font-size: 16px;
   margin-bottom: 50px;
-  float: left;
 }
 
 .tabs-list h1 {
@@ -138,6 +147,10 @@ h1 {
   border-bottom: none;
 }
 
+.main-weather {
+  flex-basis: 100%;
+}
+
 .weather {
   background: lightgreen;
   padding-top: 45px;
@@ -153,16 +166,16 @@ h1 {
 }
 
 .autocomplete {
-  background: rgb(224, 109, 126);
+  display: inline-block;
   width: 250px;
-  padding: 20px;
-  border: 2px solid #000;
+  margin-left: 100px;
   font-size: 18px;
 }
 
-.floated {
-  float: left;
-  margin-left: 100px;
+.innerDiv {
+  background: rgb(224, 109, 126);
+  padding: 20px;
+  border: 2px solid #000;
 }
 
 .autocomplete ul {
