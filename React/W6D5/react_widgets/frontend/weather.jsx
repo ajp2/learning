@@ -10,8 +10,7 @@ class Weather extends React.Component {
 
   componentWillMount() {
     navigator.geolocation.getCurrentPosition((pos) => {
-      // const url = `http://api.openweathermap.org/data/2.5/weather?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&units=metric&APPID=7db5e6c3b824597d8087edda4ff99bfa`;
-      const url = "http://google.com";
+      const url = `http://api.openweathermap.org/data/2.5/weather?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&units=metric&APPID=7db5e6c3b824597d8087edda4ff99bfa`;
       let weather;
 
       const xml = new XMLHttpRequest();
