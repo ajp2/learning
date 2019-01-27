@@ -18,7 +18,8 @@ class Tabs extends React.Component {
   render() {
     return (
       <div className="tabs">
-        <ul>
+        <h1>Tabs</h1>
+        <ul className="tabs-list">
           {
             this.props.info.map((tab, idx) => {
               return <Header tabInfo={tab} key={idx} index={idx} clickHandler={this.changeTab} />;

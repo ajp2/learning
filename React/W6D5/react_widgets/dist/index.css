@@ -59,13 +59,14 @@ table {
 h1 {
   font-size: 32px;
   font-weight: bold;
+  margin-bottom: 15px;
 }
 
 .clock-display {
   background: rgb(240, 160, 41);
   padding: 20px;
   border: 2px solid #000;
-  margin: 10px 0;
+  margin-bottom: 50px;
   color: #fff;
 }
 
@@ -83,12 +84,13 @@ h1 {
 .tabs {
   display: inline-block;
   font-size: 16px;
-
+  margin-bottom: 50px;
 }
 
-.tabs h1 {
+.tabs-list h1 {
   font-size: 18px;
   font-weight: 400;
+  margin-bottom: 0;
 }
 
 .tabs > ul {
@@ -133,4 +135,17 @@ h1 {
 .active-tab {
   font-weight: 700;
   border-bottom: none;
+}
+
+.weather {
+  background: lightgreen;
+  padding-top: 45px;
+  height: 100px;
+  text-align: center;
+  border: 2px solid #000;
+  font-size: 28px;
+}
+
+.weather p {
+  margin-bottom: 5px;
 }

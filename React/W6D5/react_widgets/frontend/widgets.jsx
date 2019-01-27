@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import Root from "./root";
 import Clock from "./clock";
 import Tabs from "./tabs";
+import Weather from "./weather";
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   <Root>
     <Clock />
     <Tabs info={tabsObj} />
+    <Weather />
   </Root>,
   root);
 });
