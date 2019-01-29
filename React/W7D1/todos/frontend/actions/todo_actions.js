@@ -10,3 +10,6 @@ export const receiveTodo = todo => ({
   type: RECEIVE_TODO,
   todo
 });
+
+window.receiveTodos = receiveTodos;
+window.receiveTodo = receiveTodo;
