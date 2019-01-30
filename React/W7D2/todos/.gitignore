@@ -13,7 +13,12 @@
 !/log/.keep
 !/tmp/.keep
 
+# Ignore node modules
 /node_modules
 /yarn-error.log
+
+# Ignore bundle
+bundle.js
+bundle.js.map
 
 .byebug_history
