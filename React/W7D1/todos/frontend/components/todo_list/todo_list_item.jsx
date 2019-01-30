@@ -1,15 +1,13 @@
 import React from "react";
+import TodoDetailViewContainer from "./todo_detail_view_container";
 
 class TodoListItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { detail: false };
 
-    this.deleteTodo = this.deleteTodo.bind(this);
     this.toggleTodo = this.toggleTodo.bind(this);
-  }
-
-  deleteTodo(event) {
-    this.props.removeTodo(this.props.todo.id);
+    this.showDetails = this.showDetails.bind(this);
   }
 
   toggleTodo(event) {
@@ -18,15 +16,19 @@ class TodoListItem extends React.Component {
     this.props.receiveTodo(updatedTodo);
   }
 
+  showDetails(event) {
+    this.setState({ detail: !this.state.detail });
+  }
+
   render() {
     const done = this.props.todo.done ? "Undo" : "Done";
 
     return (
       <li>
         <div>
-          <a href="#">{this.props.todo.title}</a>
+          <a href="#" onClick={this.showDetails}>{this.props.todo.title}</a>
           <button onClick={this.toggleTodo}>{done}</button>
-          <button onClick={this.deleteTodo}>Delete Todo</button>
+          {this.state.detail ? <TodoDetailViewContainer todo={this.props.todo} /> : false}
         </div>
       </li>
     );
