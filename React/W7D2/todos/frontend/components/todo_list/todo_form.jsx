@@ -7,7 +7,8 @@ class TodoForm extends React.Component {
     super(props);
     this.state = {
       title: "",
-      body: ""
+      body: "",
+      errors: ""
     };
 
     this.onChange = this.onChange.bind(this);
@@ -23,10 +24,15 @@ class TodoForm extends React.Component {
 
     const newTodo = Object.assign({}, this.state, { id: uniqueId() });
     this.props.createTodo(newTodo)
-      .then(() => this.setState({ title: "", body: "" }));
+      .then(
+        () => this.setState({ title: "", body: "", errors: "" }),
+        () => this.setState({ errors: this.props.errors })
+      );
   }
 
   render() {
+    let errors = this.state.errors || false;
+
     return (
       <form action="#" onSubmit={this.onSubmit}>
         <label htmlFor="todo_title">Title:</label>
@@ -37,8 +43,9 @@ class TodoForm extends React.Component {
         <label htmlFor="todo_body">Body:</label>
         <br/>
         <textarea name="body" id="todo_body" onChange={this.onChange} value={this.state.body} />
-        <br/><br/>
+        <br/>
 
+        {errors ? (<ul>{errors.map((error, idx) => <li key={idx}>{error}</li>)}</ul>) : false}
         <button>Create Todo!</button>
       </form>
     )
