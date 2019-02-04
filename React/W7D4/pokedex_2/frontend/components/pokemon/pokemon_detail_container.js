@@ -1,12 +1,16 @@
 import { connect } from "react-redux";
 import PokemonDetail from "./pokemon_detail";
 import { requestSinglePokemon } from "../../actions/pokemon_actions";
+import { selectPokeItems } from "../../reducers/selectors";
 
-import { selectSinglePokemon } from "../../reducers/selectors";
+const mapStateToProps = (state, ownProps) => {
+  const pokemon = state.entities.pokemon[ownProps.match.params.pokemonId];
 
-const mapStateToProps = (state, ownProps) => ({
-  pokemon: selectSinglePokemon(state, ownProps)
-});
+  return {
+    pokemon,
+    items: selectPokeItems(state, pokemon)
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   requestSinglePokemon: id => dispatch(requestSinglePokemon(id))

@@ -20,7 +20,7 @@ class PokemonIndex extends React.Component {
         <ul className="pokemon-list">
           {pokemonItems}
         </ul>
-        <Route path="/pokemon/:pokemonId" component={PokemonDetailContainer} />
+        {this.props.pokemon.length > 1 ? <Route path="/pokemon/:pokemonId" component={PokemonDetailContainer} /> : false }
       </section>
     );
   }

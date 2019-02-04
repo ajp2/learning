@@ -9,9 +9,7 @@ const pokemonReducer = (state = {}, action) => {
       const pokemonId = action.pokemon.pokemon.id;
       const pokemonInfo = action.pokemon.pokemon;
       
-      const stateWithPokemonInfo = merge({}, state);
-      stateWithPokemonInfo[pokemonId] = pokemonInfo;
-      return stateWithPokemonInfo;
+      return merge({}, state, { [pokemonId]: pokemonInfo });
     default:
       return state;
   }
