@@ -1,34 +1,3 @@
 // Place all the styles related to the Api::PokemonController controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-@import "variables";
-
-.pokedex {
-  display: flex;
-}
-
-.pokemon-list {
-  width: 300px;
-}
-
-.pokemon-index-item {
-  list-style: none;
-  padding: 5px 10px;
-}
-
-.pokemon-index-item:hover {
-  background: $grey;
-  cursor: pointer;
-}
-
-.pokemon-index-item img {
-  width: 20px;
-  margin: 0 10px;
-}
-
-.pokemon-index-item a {
-  display: block;
-  text-decoration: none;
-  color: #000;
-}
