@@ -1,8 +1,8 @@
 const path = require('path');
 
 module.exports = {
-  entry: "./frontend/index.jsx",
-  ouput: {
+  entry: "./frontend/bench_bnb.jsx",
+  output: {
     path: path.resolve(__dirname, "app", "assets", "javascripts"),
     filename: "bundle.js"
   },
@@ -22,6 +22,6 @@ module.exports = {
   },
   devtool: "source-map",
   resolve: {
-    extension: [".js", ".jsx", "*"]
+    extensions: [".js", ".jsx", "*"]
   }
 };
