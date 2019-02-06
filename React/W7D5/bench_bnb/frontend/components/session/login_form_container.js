@@ -4,8 +4,7 @@ import SessionForm from "./session_form";
 
 const mapStateToProps = state => ({
   errors: state.errors.session,
-  formType: "login",
-  currentUser: state.entities.users[state.session.id]
+  formType: "login"
 });
 
 const mapDispatchToProps = dispatch => ({

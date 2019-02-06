@@ -52,8 +52,6 @@ export class SessionForm extends Component {
         ) : (
           <Link to="/login">Log In</Link>
         )}
-
-        {this.props.currentUser ? <Redirect to="/" /> : false}
       </div>
     )
   }
