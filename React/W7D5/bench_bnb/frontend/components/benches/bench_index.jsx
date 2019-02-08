@@ -12,12 +12,12 @@ export class BenchIndex extends Component {
     if (benches.length === 0) return null;
 
     return (
-      <section>
+      <div className="right-half">
         <h2>Benches</h2>
         <div>
           {benches.map((bench, idx) => <BenchIndexItem key={idx} bench={bench} />)}
         </div>
-      </section>
+      </div>
     );
   }
 }
