@@ -4,7 +4,8 @@ import configureStore from "./store/store";
 import Root from "./components/root";
 
 import { signup } from "./util/session_api_util";
-import { fetchBenches } from "./actions/bench_actions";
+// import { fetchBenches } from "./actions/bench_actions";
+import { fetchBenches } from "./util/bench_api_util";
 
 document.addEventListener("DOMContentLoaded", () => {
   let store;
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Testing
   window.getState = store.getState;
   window.dispatch = store.dispatch;
+  window.fetchBenches = fetchBenches;
 
   const rootEl = document.getElementById("root");
   ReactDOM.render(<Root store={store} />, rootEl);
