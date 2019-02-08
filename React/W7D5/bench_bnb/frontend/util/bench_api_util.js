@@ -1,8 +1,8 @@
-export const fetchBenches = filters => (
-  $.ajax({
+export const fetchBenches = bounds => {
+  return $.ajax({
     method: "GET",
     url: "/api/benches",
-    data: { bounds: filters },
+    data: bounds,
     error: err => console.log(err)
   })
-);
+};

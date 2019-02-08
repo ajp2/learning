@@ -6,7 +6,7 @@ class Bench < ApplicationRecord
 
     northEast = bounds["northEast"]
     southWest = bounds["southWest"]
-    Bench
+    Bench.all
       .where("lat >= ? AND lat <= ?", southWest["lat"], northEast["lat"])
       .where("lng >= ? AND lng <= ?", southWest["lng"], northEast["lng"])
   end

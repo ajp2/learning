@@ -18,7 +18,7 @@ export class BenchMap extends Component {
       const getSW = getBounds.getSouthWest();
       const bounds = {
         northEast: { lat: getNE.lat(), lng: getNE.lng() },
-        soutWest: { lat: getSW.lat(), lng: getSW.lng() }
+        southWest: { lat: getSW.lat(), lng: getSW.lng() }
       };
       
       this.props.updateBounds(bounds);

@@ -7,7 +7,7 @@ export const receiveBenches = benches => ({
   benches
 });
 
-export const fetchBenches = () => dispatch => BenchAPIUtil.fetchBenches()
+export const fetchBenches = bounds => dispatch => BenchAPIUtil.fetchBenches(bounds)
   .then(benches => dispatch(receiveBenches(benches)));
 
 window.fetchBenches = fetchBenches;
