@@ -11,6 +11,18 @@ export class BenchMap extends Component {
     this.map = new google.maps.Map(this.mapNode, mapOptions);
     this.MarkerManager = new MarkerManager(this.map);
     this.MarkerManager.updateMarkers(this.props.benches);
+
+    this.map.addListener("idle", () => {
+      const getBounds = this.map.getBounds();
+      const getNE = getBounds.getNorthEast();
+      const getSW = getBounds.getSouthWest();
+      const bounds = {
+        northEast: { lat: getNE.lat(), lng: getNE.lng() },
+        soutWest: { lat: getSW.lat(), lng: getSW.lng() }
+      };
+      
+      this.props.updateBounds(bounds);
+    });
   }
 
   componentDidUpdate() {
