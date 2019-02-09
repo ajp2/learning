@@ -4,13 +4,16 @@ import { allBenches } from "../../reducers/selectors";
 import Search from "./search";
 import { updateBounds } from "../../actions/filter_actions";
 
+
 const mapStateToProps = state => ({
-  benches: allBenches(state)
+  benches: allBenches(state),
+  minSeating: state.ui.filters.minSeating,
+  maxSeating: state.ui.filters.maxSeating
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchBenches: () => dispatch(fetchBenches()),
-  updateBounds: bounds => dispatch(updateBounds(bounds))
+  updateBounds: (filter, value) => dispatch(updateBounds(filter, value))
 });
 
 export default connect(

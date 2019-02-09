@@ -5,7 +5,7 @@ export class BenchForm extends Component {
     super(props);
     this.state = {
       description: "",
-      seats: 2
+      seating: 2
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -30,13 +30,13 @@ export class BenchForm extends Component {
 
   render() {
     return (
-      <form>
+      <form className="bench-form">
         <label>Description:
           <input type="text" name="description" onChange={this.handleChange} value={this.state.description} />
         </label>
 
         <label>Number of Seats:
-          <input type="number" name="seats" onChange={this.handleChange} value={this.state.seats} />
+          <input type="number" name="seating" onChange={this.handleChange} value={this.state.seating} />
         </label>
 
         <label>Latitude:

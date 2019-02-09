@@ -30,7 +30,7 @@ export class BenchMap extends Component {
         southWest: { lat: getSW.lat(), lng: getSW.lng() }
       };
       
-      this.props.updateBounds(bounds);
+      this.props.updateBounds("bounds", bounds);
     });
   }
 
