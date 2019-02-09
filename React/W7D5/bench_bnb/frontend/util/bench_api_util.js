@@ -15,3 +15,10 @@ export const createBench = bench => (
     error: err => console.log(err)
   })
 );
+
+export const fetchBench = id => (
+  $.ajax({
+    method: "GET",
+    url: `/api/benches/${id}`
+  })
+);
