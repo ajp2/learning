@@ -29,3 +29,17 @@
    height: 500px;
    margin-left: 25px;
  }
+
+ form {
+   display: flex;
+   flex-direction: column;
+   width: 400px;
+   border: 1px solid #000;
+   padding: 25px;
+   margin: 20px auto;
+ }
+
+ form input, form button {
+   display: block;
+   margin: 10px;
+ }
